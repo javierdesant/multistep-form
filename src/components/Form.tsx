@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react"
+import { FunctionComponent, useState } from "react"
 import { z } from "zod" // TODO: implement zod for safer validation
 
 interface FormProps {
@@ -15,38 +15,41 @@ interface FormProps {
 }
  
 const Form: FunctionComponent<FormProps> = () => {
+
+    const [step, setStep] = useState(1)
+
     return ( 
-        <>
+        <div className="flex grow bg-white p-5">
             {/* <!-- Sidebar start --> */}
 
-            <div>
-                <div>
+            <div className="flex flex-col bg-blue-600">
+                <div className="flex">
                     <button id="step-1">1</button>
-                    <div>
+                    <div className="flex flex-col items-baseline">
                         <label htmlFor="step-1">Step 1</label>
                         <label htmlFor="step-1">Your info</label>
                     </div>
                 </div>
 
-                <div>
+                <div className="flex">
                     <button id="step-2">2</button>
-                    <div>
+                    <div className="flex flex-col items-baseline">
                         <label htmlFor="step-2">Step 2</label>
                         <label htmlFor="step-1">Select plan</label>
                     </div>
                 </div>
 
-                <div>
+                <div className="flex">
                     <button id="step-3">3</button>
-                    <div>
+                    <div className="flex flex-col items-baseline">
                         <label htmlFor="step-3">Step 3</label>
                         <label htmlFor="step-1">Add-ons</label>
                     </div>
                 </div>
 
-                <div>
+                <div className="flex">
                     <button id="step-4">4</button>
-                    <div>
+                    <div className="flex flex-col items-baseline">
                         <label htmlFor="step-4">Step 4</label>
                         <label htmlFor="step-1">Summary</label>
                     </div>
@@ -55,124 +58,136 @@ const Form: FunctionComponent<FormProps> = () => {
 
             {/* <!-- Sidebar end --> */}
 
-            <form action="">
+            <form action="" className="flex grow flex-col px-24">
 
                 {/* <!-- Step 1 start --> */}
 
-                <h1>Personal info</h1>
-                <p>Please provide your name, email address, and phone number.</p>
-                
-                <label htmlFor="name">Name</label>
-                <input type="text" id="name" placeholder="e.g. Stephen King" />
-                
-                <label htmlFor="email">Email Address</label>
-                <input type="email" id="email" placeholder="e.g. stephenking@lorem.com" />
+                { step === 1 && <div>
 
-                <label htmlFor="phone">Phone Number</label>
-                <input type="number" id="phone" placeholder="e.g. +1 234 567 890" />
+                    <h1>Personal info</h1>
+                    <p>Please provide your name, email address, and phone number.</p>
+                    
+                    <label htmlFor="name">Name</label>
+                    <input type="text" id="name" placeholder="e.g. Stephen King" />
+                    
+                    <label htmlFor="email">Email Address</label>
+                    <input type="email" id="email" placeholder="e.g. stephenking@lorem.com" />
 
-                <button>Next Step</button>
+                    <label htmlFor="phone">Phone Number</label>
+                    <input type="number" id="phone" placeholder="e.g. +1 234 567 890" />
+                
+                </div>}
 
                 {/* <!-- Step 1 end -->
 
                 <!-- Step 2 start --> */}
 
-                <h1>Select your plan</h1>
-                <p>You have the option of monthly or yearly billing.</p>
+                {step === 2 && <div>
 
-                <button>
-                    Arcade
-                    $9/mo
-                </button>
+                    <h1>Select your plan</h1>
+                    <p>You have the option of monthly or yearly billing.</p>
 
-                <button>
-                    Advanced
-                    $12/mo
-                </button>
+                    <button>
+                        Arcade
+                        $9/mo
+                    </button>
 
-                <button>
-                    Pro
-                    $15/mo
-                </button>
+                    <button>
+                        Advanced
+                        $12/mo
+                    </button>
 
-                <div>
-                    Monthly
-                    Yearly
-                </div>
+                    <button>
+                        Pro
+                        $15/mo
+                    </button>
 
-                <button>Go Back</button>
-                <button>Next Step</button>
+                    <div>
+                        Monthly
+                        Yearly
+                    </div>
+
+                </div>}
 
                 {/* <!-- Step 2 end -->
 
                 <!-- Step 3 start --> */}
 
-                <h1>Pick add-ons</h1>
-                <p>Add-ons help enhance your gaming experience.</p>
-                
-                <div>
-                    <input type="checkbox" id="online-service" />
-                    <div>
-                        <h2>Online service</h2>
-                        <p>Access to multiplayer games</p>
-                    </div>
-                    <span>+$1/mo</span>
-                </div>
+                {step === 3 && <div>
 
-                <div>
-                    <input type="checkbox" id="online-service" />
+                    <h1>Pick add-ons</h1>
+                    <p>Add-ons help enhance your gaming experience.</p>
+                    
                     <div>
-                        <h2>Larger storage</h2>
-                        <p>Extra 1TB of cloud save</p>
+                        <input type="checkbox" id="online-service" />
+                        <div>
+                            <h2>Online service</h2>
+                            <p>Access to multiplayer games</p>
+                        </div>
+                        <span>+$1/mo</span>
                     </div>
-                    <span>+$2/mo</span>
-                </div>
-                
-                <div>
-                    <input type="checkbox" id="online-service" />
-                    <div>
-                        <h2>Customizable Profile</h2>
-                        <p>Custom theme on your profile</p>
-                    </div>
-                    <span>+$2/mo</span>
-                </div>
 
-                <button>Go Back</button>
-                <button>Next Step</button>
+                    <div>
+                        <input type="checkbox" id="online-service" />
+                        <div>
+                            <h2>Larger storage</h2>
+                            <p>Extra 1TB of cloud save</p>
+                        </div>
+                        <span>+$2/mo</span>
+                    </div>
+                    
+                    <div>
+                        <input type="checkbox" id="online-service" />
+                        <div>
+                            <h2>Customizable Profile</h2>
+                            <p>Custom theme on your profile</p>
+                        </div>
+                        <span>+$2/mo</span>
+                    </div>
+
+                </div>}
 
                 {/* <!-- Step 3 end -->
 
                 <!-- Step 4 start --> */}
 
-                <h1>Finishing up</h1>
-                <p>Double-check everything looks OK before confirming.</p>
+                {step === 4 && <div>
 
-                {/* <!-- Dynamically add subscription and add-on selections here --> */}
 
-                <p>Total (per month/year)</p> {/** Dynamically change billing type */}
+                    <h1>Finishing up</h1>
+                    <p>Double-check everything looks OK before confirming.</p>
+
+                    {/* <!-- Dynamically add subscription and add-on selections here --> */}
+
+                    <p>Total (per month/year)</p> {/** Dynamically change billing type */}
                 
-
-                <button>Go Back</button>
-                <button>Next Step</button>
+                </div>}
 
                 {/* <!-- Step 4 end -->
 
                 <!-- Step 5 start --> */}
 
-                <img src="../assets/images/icon-thank-you.svg" alt="" />
+                {step === 5 && <div>
 
-                <h1>Thank you!</h1>
+                    <img src="../assets/images/icon-thank-you.svg" alt="" />
 
-                <p>
-                    Thanks for confirming your subscription! We hope you have fun 
-                    using our platform. If you ever need support, please feel free 
-                    to email us at support@loremgaming.com.
-                </p>
+                    <h1>Thank you!</h1>
+
+                    <p>
+                        Thanks for confirming your subscription! We hope you have fun 
+                        using our platform. If you ever need support, please feel free 
+                        to email us at support@loremgaming.com.
+                    </p>
+
+                </div>}
 
                 {/* <!-- Step 5 end --> */}
 
+                <button>Go Back</button>
+                <button>Next Step</button>
+
             </form>
-        </>
+        </div>
      );
 }
  
