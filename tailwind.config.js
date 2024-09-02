@@ -21,6 +21,10 @@ export default {
         "brand-alabaster": "hsl(231, 100%, 99%)",
         "brand-white": "hsl(0, 0%, 100%)",
       },
+      backgroundImage: {
+        "sidebar-desktop": "url('/img/bg-sidebar-desktop.svg')",
+        "sidebar-mobile": "url('/img/bg-sidebar-mobile.svg')",
+      },
     },
   },
   plugins: [
