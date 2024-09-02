@@ -6,7 +6,14 @@ function App() {
     <>
       <h1 className=" text-6xl font-ubuntu">App</h1>
 
-      <Form />
+      <Form
+        steps={[
+          { id: "step-1", name: "Your info" },
+          { id: "step-2", name: "Select plan" },
+          { id: "step-3", name: "Add-ons" },
+          { id: "step-4", name: "Summary" },
+        ]}
+      />
 
       <div className="attribution m-5">
           Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank" className="hover:underline">Frontend Mentor</a>. 
