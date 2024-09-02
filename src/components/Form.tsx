@@ -1,6 +1,8 @@
 import { FunctionComponent, useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { z } from "zod" // TODO: implement zod for safer validation
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 interface FormProps {
     steps: {
@@ -12,7 +14,7 @@ interface FormProps {
 interface FormValues {
     name: string
     email: string
-    phone: number
+    phone: string
     plan: "arcade" | "advanced" | "pro"
     billing: "montly" | "yearly"
     addons: {   //  TODO: get addons options from props
@@ -41,7 +43,7 @@ export default function Form({ steps }: FormProps) {
             setCurrentStep(prevStep => prevStep + 1);
     };
 
-    const { register } = form
+    const { register, control } = form
 
     return ( 
         <div className="flex grow bg-white p-5">
@@ -98,13 +100,19 @@ export default function Form({ steps }: FormProps) {
                     />
 
                     <label htmlFor="phone" className=" mt-5 mb-2">Phone Number</label>
-                    <input type="tel" id="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" placeholder="e.g. +1 234 567 890" 
-                        className="border-brand-light-gray text-brand-marine-blue font-medium placeholder:opacity-70 rounded-lg py-3 px-4" 
-                        {...register("phone",
-                            { required: "This field is required" }  // TODO: add phone number validation
-                        )}
-                    />
-                        
+                    <Controller
+                    control={control}
+                    name="phone"
+                    render={({ field: { onChange, value } }) => (
+                        <PhoneInput
+                            className="phone-input"
+                            value={value}
+                            onChange={onChange}
+                            defaultCountry="ES"
+                            placeholder="e.g. +1 234 567 890"
+                        />
+                    )}
+                />                    
                 </div>}
 
                 {/* <!-- Step 1 end -->
