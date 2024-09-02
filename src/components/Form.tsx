@@ -1,8 +1,9 @@
-import { FunctionComponent, useEffect, useState } from "react"
+import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { z } from "zod" // TODO: implement zod for safer validation
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import { formDataSchema } from '../lib/schema.ts'
 
 interface FormProps {
     steps: {
@@ -11,18 +12,7 @@ interface FormProps {
     }[]
 }
 
-interface FormValues {
-    name: string
-    email: string
-    phone: string
-    plan: "arcade" | "advanced" | "pro"
-    billing: "montly" | "yearly"
-    addons: {   //  TODO: get addons options from props
-        onlineService: boolean
-        largerStorage: boolean
-        customizableProfile: boolean
-    }
-}
+type FormValues = z.infer<typeof formDataSchema>;
  
 export default function Form({ steps }: FormProps) {
 
@@ -112,8 +102,8 @@ export default function Form({ steps }: FormProps) {
                             placeholder="e.g. +1 234 567 890"
                         />
                     )}
-                />                    
-                </div>}
+                />
+                </div> }
 
                 {/* <!-- Step 1 end -->
 
