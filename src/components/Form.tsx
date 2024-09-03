@@ -31,8 +31,13 @@ export default function Form({}: FormProps) {
     const { 
         register, 
         control, 
-        trigger 
-    } = useForm<FormValues>()
+        trigger,
+        formState: { 
+            errors,
+        },
+    } = useForm<FormValues>({
+        // TODO: implement zodResolver()
+    })
 
     const goBack = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -85,14 +90,20 @@ export default function Form({}: FormProps) {
                     <h1>Personal info</h1>
                     <p>Please provide your name, email address, and phone number.</p>
                     
-                    <label htmlFor="name" className=" mt-5 mb-2">Name</label>
+                    <div className="flex grow justify-between mt-5 mb-2">
+                        <label htmlFor="name">Name</label>
+                        { errors.name && <span className=" text-sm font-bold text-brand-strawberry-red">{errors.name.message}</span> }
+                    </div>
                     <input type="text" id="name" placeholder="e.g. Stephen King" 
                         {...register("name",
                             { required: "This field is required" }
                         )}
                     />
                     
-                    <label htmlFor="email" className=" mt-5 mb-2">Email Address</label>
+                    <div className="flex grow justify-between mt-5 mb-2">
+                        <label htmlFor="email">Email Address</label>
+                        { errors.email && <span className=" text-sm font-bold text-brand-strawberry-red">{errors.email.message}</span> }
+                    </div>
                     <input type="email" id="email" placeholder="e.g. stephenking@lorem.com" 
                         {...register("email",
                             { required: "This field is required",
@@ -100,11 +111,15 @@ export default function Form({}: FormProps) {
                                     value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
                                     message: "Please enter a valid email address"
                                 }
-                             }
+                            }
                         )}
                     />
+                    {  }
 
-                    <label htmlFor="phone" className=" mt-5 mb-2">Phone Number</label>
+                    <div className="flex grow justify-between mt-5 mb-2">
+                        <label htmlFor="phone">Phone Number</label>
+                        { errors.phone && <span className="text-sm font-bold text-brand-strawberry-red">{errors.phone.message}</span> }
+                    </div>
                     <Controller
                         control={control}
                         name="phone"
