@@ -5,29 +5,39 @@ import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { formDataSchema } from '../lib/schema.ts'
 
-interface FormProps {
-    steps: {
-        id: `step-${number}`
-        name: string
-    }[]
+interface FormProps {}
+
+type Step = {
+    id: `step-${number}`
+    name: string
+    fields?: string[]
 }
 
 type FormValues = z.infer<typeof formDataSchema>;
+
+const steps:Step[] = [
+    { id: "step-1", name: "Your info", fields: ["name", "email", "phone"] },
+    { id: "step-2", name: "Select plan", fields: ["plan"] },
+    { id: "step-3", name: "Add-ons", fields: ["billing"] },
+    { id: "step-4", name: "Summary", fields: ["addons"] },
+    { id: "step-4", name: "Complete" }
+]
+
  
-export default function Form({ steps }: FormProps) {
+export default function Form({}: FormProps) {
 
     const [currentStep, setCurrentStep] = useState(0)
 
     const form = useForm<FormValues>()
 
-    const handlePrevStep = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const goBack = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if (currentStep > 0) {
             setCurrentStep(prevStep => prevStep - 1);
         }
     };
 
-    const handleNextStep = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const goNext = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if (currentStep < steps.length)
             setCurrentStep(prevStep => prevStep + 1);
@@ -39,7 +49,7 @@ export default function Form({ steps }: FormProps) {
         <div className="flex grow bg-white p-5">
             {/* <!-- Sidebar start --> */}
 
-            <div className="flex flex-col w-[274px] h-[568px] shrink-0 p-5 bg-sidebar-desktop rounded-xl">
+            <div className="flex flex-col w-[274px] min-h-[568px] shrink-0 p-5 bg-sidebar-desktop rounded-xl">
                 {steps.map((step, index) => (
                     <div className="flex ml-2 my-4 items-center" key={step.id}>
                         <button id="step-1" 
@@ -146,7 +156,9 @@ export default function Form({ steps }: FormProps) {
                     <p>Add-ons help enhance your gaming experience.</p>
                     
                     <div>
-                        <input type="checkbox" id="online-service" />
+                        <input type="checkbox" id="addons.onlineService" 
+                            {...register("addons.onlineService")}
+                        />
                         <div>
                             <h2>Online service</h2>
                             <p>Access to multiplayer games</p>
@@ -155,7 +167,9 @@ export default function Form({ steps }: FormProps) {
                     </div>
 
                     <div>
-                        <input type="checkbox" id="online-service" />
+                        <input type="checkbox" id="addons.largerStorage" 
+                            {...register("addons.largerStorage")} 
+                        />
                         <div>
                             <h2>Larger storage</h2>
                             <p>Extra 1TB of cloud save</p>
@@ -164,7 +178,9 @@ export default function Form({ steps }: FormProps) {
                     </div>
                     
                     <div>
-                        <input type="checkbox" id="online-service" />
+                        <input type="checkbox" id="addons.customizableProfile"
+                            {...register("addons.customizableProfile")} 
+                        />
                         <div>
                             <h2>Customizable Profile</h2>
                             <p>Custom theme on your profile</p>
@@ -214,12 +230,12 @@ export default function Form({ steps }: FormProps) {
                     <button 
                         disabled={currentStep === 0} 
                         className="flex w-min text-nowrap bg-brand-marine-blue text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:invisible"
-                        onClick={handlePrevStep}
+                        onClick={goBack}
                     >Previous</button>
                     <button 
                         disabled={currentStep === steps.length - 1} 
                         className="flex w-min text-nowrap peer bg-brand-marine-blue text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:hidden"
-                        onClick={handleNextStep}
+                        onClick={goNext}
                     >Next Step</button>
                     <button 
                         disabled={currentStep !== steps.length - 1}    // FIXME: inconsistent ugly logic
