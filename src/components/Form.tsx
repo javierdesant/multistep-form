@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { z } from "zod" // TODO: implement zod for safer validation
 import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
 import { formDataSchema } from '../lib/schema.ts'
 
 interface FormProps {}
@@ -10,7 +10,7 @@ interface FormProps {}
 type Step = {
     id: `step-${number}`
     name: string
-    fields?: string[]
+    fields?: (keyof FormValues)[]
 }
 
 type FormValues = z.infer<typeof formDataSchema>;
@@ -28,7 +28,11 @@ export default function Form({}: FormProps) {
 
     const [currentStep, setCurrentStep] = useState(0)
 
-    const form = useForm<FormValues>()
+    const { 
+        register, 
+        control, 
+        trigger 
+    } = useForm<FormValues>()
 
     const goBack = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -37,20 +41,23 @@ export default function Form({}: FormProps) {
         }
     };
 
-    const goNext = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const goNext = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        if (currentStep < steps.length)
-            setCurrentStep(prevStep => prevStep + 1);
-    };
+        const isValid = await trigger(steps[currentStep].fields)
 
-    const { register, control } = form
+        if (!isValid) return
+
+        if (currentStep < steps.length - 1) {
+            setCurrentStep(step => step + 1)
+        }
+    }
 
     return ( 
         <div className="flex grow bg-white p-5">
             {/* <!-- Sidebar start --> */}
 
             <div className="flex flex-col w-[274px] min-h-[568px] shrink-0 p-5 bg-sidebar-desktop rounded-xl">
-                {steps.map((step, index) => (
+                {steps.slice(0, -1).map((step, index) => (
                     <div className="flex ml-2 my-4 items-center" key={step.id}>
                         <button id="step-1" 
                             className={`h-8 w-8 border font-bold text-sm rounded-full ${currentStep === index ? "bg-brand-pastel-blue text-brand-marine-blue" : "text-brand-alabaster" }`}
@@ -101,18 +108,22 @@ export default function Form({}: FormProps) {
 
                     <label htmlFor="phone" className=" mt-5 mb-2">Phone Number</label>
                     <Controller
-                    control={control}
-                    name="phone"
-                    render={({ field: { onChange, value } }) => (
-                        <PhoneInput
-                            className="phone-input"
-                            value={value}
-                            onChange={onChange}
-                            defaultCountry="ES"
-                            placeholder="e.g. +1 234 567 890"
-                        />
-                    )}
-                />
+                        control={control}
+                        name="phone"
+                        rules={{ 
+                            required: "This field is required", 
+                            validate: value => isValidPhoneNumber(value) || "Please enter a valid phone number"
+                        }}
+                        render={({ field: { onChange, value } }) => (
+                            <PhoneInput
+                                className="phone-input"
+                                value={value}
+                                onChange={onChange}
+                                defaultCountry="ES"
+                                placeholder="e.g. +1 234 567 890"
+                                />
+                        )}
+                    />
                 </div> }
 
                 {/* <!-- Step 1 end -->
