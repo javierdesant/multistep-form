@@ -7,13 +7,13 @@ import { formDataSchema } from '../lib/schema.ts'
 
 interface FormProps {}
 
+type FormValues = z.infer<typeof formDataSchema>;
+
 type Step = {
     id: `step-${number}`
     name: string
     fields?: (keyof FormValues)[]
 }
-
-type FormValues = z.infer<typeof formDataSchema>;
 
 const steps:Step[] = [
     { id: "step-1", name: "Your info", fields: ["name", "email", "phone"] },
@@ -87,7 +87,6 @@ export default function Form({}: FormProps) {
                     
                     <label htmlFor="name" className=" mt-5 mb-2">Name</label>
                     <input type="text" id="name" placeholder="e.g. Stephen King" 
-                        className="border-brand-light-gray text-brand-marine-blue focus:ring-brand-purplish-blue focus:border-brand-purplish-blue font-medium placeholder:opacity-70 rounded-lg py-3 px-4" 
                         {...register("name",
                             { required: "This field is required" }
                         )}
@@ -95,7 +94,6 @@ export default function Form({}: FormProps) {
                     
                     <label htmlFor="email" className=" mt-5 mb-2">Email Address</label>
                     <input type="email" id="email" placeholder="e.g. stephenking@lorem.com" 
-                        className="border-brand-light-gray text-brand-marine-blue font-medium placeholder:opacity-70 rounded-lg py-3 px-4" 
                         {...register("email",
                             { required: "This field is required",
                                 pattern: {
@@ -119,7 +117,7 @@ export default function Form({}: FormProps) {
                                 className="phone-input"
                                 value={value}
                                 onChange={onChange}
-                                defaultCountry="ES"
+                                defaultCountry="US"
                                 placeholder="e.g. +1 234 567 890"
                                 />
                         )}

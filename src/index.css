@@ -33,7 +33,7 @@
   [type='week'],
   [multiple],
   select {
-    @apply block border-brand-light-gray text-brand-marine-blue focus:ring-brand-purplish-blue focus:border-brand-purplish-blue font-medium placeholder-opacity-70 rounded-lg py-3 px-4
+    @apply block border-brand-light-gray text-brand-marine-blue focus:ring-brand-purplish-blue focus:border-brand-purplish-blue font-medium placeholder:opacity-70 rounded-lg py-3 px-4
   }
 }
 
