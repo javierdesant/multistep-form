@@ -44,14 +44,7 @@ export default function Form({}: FormProps) {
         // TODO: implement zodResolver()
     })
 
-    const goBack = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        if (currentStep > 0) {
-            setCurrentStep(prevStep => prevStep - 1);
-        }
-    };
-
-    const goNext = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const next = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         const isValid = await trigger(steps[currentStep].fields)
 
@@ -61,6 +54,13 @@ export default function Form({}: FormProps) {
             setCurrentStep(step => step + 1)
         }
     }
+
+    const prev = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        if (currentStep > 0) {
+            setCurrentStep(prevStep => prevStep - 1);
+        }
+    };
 
     return ( 
         <div className="flex grow bg-white p-5">
@@ -107,7 +107,7 @@ export default function Form({}: FormProps) {
                     
                     <div className="flex grow justify-between mt-5 mb-2">
                         <label htmlFor="email">Email Address</label>
-                        { errors.email && <span className=" text-sm font-bold text-brand-strawberry-red">{errors.email.message}</span> }
+                        { errors.email && <span cpx-6lassName=" text-sm font-bold text-brand-strawberry-red">{errors.email.message}</span> }
                     </div>
                     <input type="email" id="email" placeholder="e.g. stephenking@lorem.com" 
                         {...register("email",
@@ -258,13 +258,13 @@ export default function Form({}: FormProps) {
                 <div className="flex justify-between mt-auto mb-4">
                     <button 
                         disabled={currentStep === 0} 
-                        className="flex w-min text-nowrap bg-brand-marine-blue text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:invisible"
-                        onClick={goBack}
-                    >Previous</button>
+                        className="flex w-min text-nowrap text-brand-cool-gray my-3 disabled:invisible"
+                        onClick={prev}
+                    >Go Back</button>
                     <button 
                         disabled={currentStep === steps.length - 1} 
                         className="flex w-min text-nowrap peer bg-brand-marine-blue text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:hidden"
-                        onClick={goNext}
+                        onClick={next}
                     >Next Step</button>
                     <button 
                         disabled={currentStep !== steps.length - 1}    // FIXME: inconsistent ugly logic
