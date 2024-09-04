@@ -264,19 +264,15 @@ export default function Form({}: FormProps) {
                 <div className="flex justify-between mt-auto mb-4">
                     <button 
                         disabled={currentStep === 0 || currentStep === steps.length - 1} 
+                        type="button"
                         className="flex w-min text-nowrap text-brand-cool-gray my-3 disabled:invisible"
-                        onClick={(event) => {
-                            event.preventDefault()
-                            handleNav(currentStep - 1)
-                        }}
+                        onClick={() => { handleNav(currentStep - 1) }}
                     >Go Back</button>
                     <button 
                         disabled={currentStep >= steps.length - 2} 
+                        type="button"
                         className="flex w-min text-nowrap bg-brand-marine-blue text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:hidden"
-                        onClick={(event) => {
-                            event.preventDefault()
-                            handleNav(currentStep + 1)
-                        }}
+                        onClick={() => { handleNav(currentStep + 1) }}
                     >Next Step</button>
                     <button 
                         disabled={currentStep !== steps.length - 2}    // FIXME: form doesnt submit
