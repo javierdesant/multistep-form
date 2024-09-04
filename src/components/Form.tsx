@@ -12,15 +12,20 @@ type FormValues = z.infer<typeof formDataSchema>;
 type Step = {
     id: `step-${number}`
     name: string
-    fields?: (keyof FormValues)[]
+    fields: (keyof FormValues)[]
 }
 
-const steps:Step[] = [
+type Steps = [
+    ...Step[],
+    { id: `step-${number}`, name: "Complete", fields: [] }
+]
+
+const steps: Steps = [
     { id: "step-1", name: "Your info", fields: ["name", "email", "phone"] },
     { id: "step-2", name: "Select plan", fields: ["plan"] },
     { id: "step-3", name: "Add-ons", fields: ["billing"] },
     { id: "step-4", name: "Summary", fields: ["addons"] },
-    { id: "step-4", name: "Complete" }
+    { id: "step-5", name: "Complete", fields: [] }
 ]
 
  
