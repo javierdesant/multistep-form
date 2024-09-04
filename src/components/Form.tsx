@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
-import { z } from "zod" // TODO: implement zod for safer validation
+import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
@@ -17,22 +17,22 @@ type Step = {
 }
 
 type Steps = [
-    ...Step[],
-    { id: `step-${number}`, name: "Complete", fields: [] }
+    { id: "complete", name: "Complete", fields: [] },
+    ...Step[]
 ]
 
 const steps: Steps = [
+    { id: "complete", name: "Complete", fields: [] },
     { id: "step-1", name: "Your info", fields: ["name", "email", "phone"] },
     { id: "step-2", name: "Select plan", fields: ["plan"] },
     { id: "step-3", name: "Add-ons", fields: ["billing"] },
     { id: "step-4", name: "Summary", fields: ["addons"] },
-    { id: "step-5", name: "Complete", fields: [] }
 ]
 
  
 export default function Form({}: FormProps) {
 
-    const [currentStep, setCurrentStep] = useState(0)
+    const [currentStep, setCurrentStep] = useState(1)
 
     const { 
         register, 
@@ -60,7 +60,7 @@ export default function Form({}: FormProps) {
 
     const onSubmit = useCallback((values: FormValues) => {
         window.alert(JSON.stringify(values, null, 4))
-        handleNav(currentStep + 1)
+        setCurrentStep(steps.length - 1)
     }, [])
 
     const handleNav = async (index: number) => {
@@ -80,20 +80,24 @@ export default function Form({}: FormProps) {
         }
     }
 
+    const LAST_STEP = steps.length - 1;
+    const COMPLETE_STEP = 0;
+
     return ( 
         <div className="flex grow bg-white p-5">
             {/* <!-- Sidebar start --> */}
 
             <div className="flex flex-col w-[274px] min-h-[568px] shrink-0 p-5 bg-sidebar-desktop rounded-xl">
-                {steps.slice(0, -1).map((step, index) => (
+                {steps.map((step, index) => (
+                    index !== COMPLETE_STEP &&
                     <div className="flex ml-2 my-4 items-center" key={step.id}>
                         <button id={step.id}
-                            disabled={ `step-${currentStep + 1}` === step.id }
+                            disabled={ `step-${currentStep}` === step.id || currentStep === COMPLETE_STEP }
                             className={`h-8 w-8 border font-bold text-sm rounded-full ${currentStep === index ? "bg-brand-pastel-blue text-brand-marine-blue" : "text-brand-alabaster" }`}
                             onClick={() => handleNav(index)}
-                        >{index+1}</button>
+                        >{index}</button>
                         <div className="flex flex-col items-baseline uppercase ml-5">
-                            <span className="text-xs text-brand-light-gray">Step {index+1}</span>
+                            <span className="text-xs text-brand-light-gray">Step {index}</span>
                             <span className="font-bold text-brand-alabaster tracking-wider">{step.name}</span>
                         </div>
                     </div>
@@ -110,7 +114,7 @@ export default function Form({}: FormProps) {
 
                 {/* <!-- Step 1 start --> */}
 
-                { currentStep === 0 && <div className="flex flex-col">
+                { currentStep === 1 && <div className="flex flex-col">
 
                     <h1>Personal info</h1>
                     <p>Please provide your name, email address, and phone number.</p>
@@ -154,7 +158,7 @@ export default function Form({}: FormProps) {
 
                 <!-- Step 2 start --> */}
 
-                { currentStep === 1 && <div>
+                { currentStep === 2 && <div>
 
                     <h1>Select your plan</h1>
                     <p>You have the option of monthly or yearly billing.</p>
@@ -185,7 +189,7 @@ export default function Form({}: FormProps) {
 
                 <!-- Step 3 start --> */}
 
-                { currentStep === 2 && <div>
+                { currentStep === 3 && <div>
 
                     <h1>Pick add-ons</h1>
                     <p>Add-ons help enhance your gaming experience.</p>
@@ -229,7 +233,7 @@ export default function Form({}: FormProps) {
 
                 <!-- Step 4 start --> */}
 
-                { currentStep === 3 && <div>
+                { currentStep === 4 && <div>
 
 
                     <h1>Finishing up</h1>
@@ -245,7 +249,7 @@ export default function Form({}: FormProps) {
 
                 <!-- Step 5 start --> */}
 
-                { currentStep === 4 && <div>
+                { currentStep === 5 && <div>
 
                     <img src="../assets/images/icon-thank-you.svg" alt="" />
 
@@ -263,19 +267,19 @@ export default function Form({}: FormProps) {
 
                 <div className="flex justify-between mt-auto mb-4">
                     <button 
-                        disabled={currentStep === 0 || currentStep === steps.length - 1} 
+                        disabled={currentStep === 1 || currentStep === COMPLETE_STEP} 
                         type="button"
                         className="flex w-min text-nowrap text-brand-cool-gray my-3 disabled:invisible"
                         onClick={() => { handleNav(currentStep - 1) }}
                     >Go Back</button>
                     <button 
-                        disabled={currentStep >= steps.length - 2} 
+                        disabled={currentStep === LAST_STEP || currentStep === COMPLETE_STEP} 
                         type="button"
                         className="flex w-min text-nowrap bg-brand-marine-blue text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:hidden"
                         onClick={() => { handleNav(currentStep + 1) }}
                     >Next Step</button>
                     <button 
-                        disabled={currentStep !== steps.length - 2}    // FIXME: form doesnt submit
+                        disabled={currentStep !== LAST_STEP}
                         type="submit" 
                         className="flex w-min text-nowrap bg-brand-marine-blue text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:hidden"
                     >Confirm</button>
