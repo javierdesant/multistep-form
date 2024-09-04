@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { z } from "zod" // TODO: implement zod for safer validation
+import { zodResolver } from "@hookform/resolvers/zod"
 import 'react-phone-number-input/style.css'
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
 import { formDataSchema } from '../lib/schema.ts'
@@ -37,12 +38,29 @@ export default function Form({}: FormProps) {
         register, 
         control, 
         trigger,
+        handleSubmit,
         formState: { 
             errors,
         },
     } = useForm<FormValues>({
-        // TODO: implement zodResolver()
+        defaultValues: {
+            name: "",
+            email: "",
+            phone: "",
+            plan: "arcade", // TEST
+            billing: "montly", // TEST
+            addons: {
+                customizableProfile: false,
+                largerStorage: false,
+                onlineService: false,
+            },
+        },
+        resolver: zodResolver(formDataSchema)
     })
+
+    const onSubmit = useCallback((values: FormValues) => {
+        window.alert(JSON.stringify(values, null, 4))
+    }, [])
 
     const next = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -85,6 +103,7 @@ export default function Form({}: FormProps) {
 
             <form 
                 className="flex grow flex-col px-24"
+                onSubmit={handleSubmit(onSubmit)}
                 noValidate
             >
 
@@ -101,7 +120,7 @@ export default function Form({}: FormProps) {
                     </div>
                     <input type="text" id="name" placeholder="e.g. Stephen King" 
                         {...register("name",
-                            { required: "This field is required" }
+                            // { required: "This field is required" }
                         )}
                     />
                     
@@ -111,12 +130,12 @@ export default function Form({}: FormProps) {
                     </div>
                     <input type="email" id="email" placeholder="e.g. stephenking@lorem.com" 
                         {...register("email",
-                            { required: "This field is required",
-                                pattern: {
-                                    value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                                    message: "Please enter a valid email address"
-                                }
-                            }
+                            // { required: "This field is required",
+                            //     pattern: {
+                            //         value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                            //         message: "Please enter a valid email address"
+                            //     }
+                            // }
                         )}
                     />
                     {  }
@@ -129,7 +148,7 @@ export default function Form({}: FormProps) {
                         control={control}
                         name="phone"
                         rules={{ 
-                            required: "This field is required", 
+                            // required: "This field is required", 
                             validate: value => isValidPhoneNumber(value) || "Please enter a valid phone number"
                         }}
                         render={({ field: { onChange, value } }) => (
