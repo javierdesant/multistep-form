@@ -12,7 +12,7 @@
   }
 
   p {
-    @apply text-brand-cool-gray mb-4
+    @apply text-brand-cool-gray mb-10
   }
 
   label {

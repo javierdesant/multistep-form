@@ -29,6 +29,8 @@ const steps: Steps = [
     { id: "step-4", name: "Summary", fields: ["addons"] },
 ]
 
+const LAST_STEP = steps.length - 1;
+const COMPLETE_STEP = 0;
  
 export default function Form({}: FormProps) {
 
@@ -39,6 +41,7 @@ export default function Form({}: FormProps) {
         control, 
         trigger,
         handleSubmit,
+        setValue,
         formState: { 
             errors,
         },
@@ -47,7 +50,7 @@ export default function Form({}: FormProps) {
             name: "",
             email: "",
             phone: "",
-            plan: "arcade", // TEST
+            plan: undefined,
             billing: "montly", // TEST
             addons: {
                 customizableProfile: false,
@@ -60,7 +63,7 @@ export default function Form({}: FormProps) {
 
     const onSubmit = useCallback((values: FormValues) => {
         window.alert(JSON.stringify(values, null, 4))
-        setCurrentStep(steps.length - 1)
+        setCurrentStep(COMPLETE_STEP)
     }, [])
 
     const handleNav = async (index: number) => {
@@ -80,17 +83,15 @@ export default function Form({}: FormProps) {
         }
     }
 
-    const LAST_STEP = steps.length - 1;
-    const COMPLETE_STEP = 0;
 
     return ( 
         <div className="flex grow bg-white p-5">
             {/* <!-- Sidebar start --> */}
 
-            <div className="flex flex-col w-[274px] min-h-[568px] shrink-0 p-5 bg-sidebar-desktop rounded-xl">
+            <div className="flex flex-col w-[274px] min-h-[568px] shrink-0 p-5 pt-7 bg-sidebar-desktop rounded-xl">
                 {steps.map((step, index) => (
                     index !== COMPLETE_STEP &&
-                    <div className="flex ml-2 my-4 items-center" key={step.id}>
+                    <div className="flex ml-2 my-3 items-center" key={step.id}>
                         <button id={step.id}
                             disabled={ `step-${currentStep}` === step.id || currentStep === COMPLETE_STEP }
                             className={`h-8 w-8 border font-bold text-sm rounded-full ${currentStep === index ? "bg-brand-pastel-blue text-brand-marine-blue" : "text-brand-alabaster" }`}
@@ -119,7 +120,7 @@ export default function Form({}: FormProps) {
                     <h1>Personal info</h1>
                     <p>Please provide your name, email address, and phone number.</p>
                     
-                    <div className="flex grow justify-between mt-5 mb-2">
+                    <div className="flex grow justify-between mb-2">
                         <label htmlFor="name">Name</label>
                         { errors.name && <span className=" text-sm font-bold text-brand-strawberry-red">{errors.name.message}</span> }
                     </div>
@@ -163,20 +164,36 @@ export default function Form({}: FormProps) {
                     <h1>Select your plan</h1>
                     <p>You have the option of monthly or yearly billing.</p>
 
-                    <button>
-                        Arcade
-                        $9/mo
-                    </button>
+                    <div className="grid grid-cols-3 grid-rows-1">
+                        <button 
+                            type="button"
+                            className="flex grow bg-green-600"
+                            onClick={() => setValue("plan", "advanced")}
+                        >
+                            Arcade
+                            $9/mo
+                        </button>
 
-                    <button>
-                        Advanced
-                        $12/mo
-                    </button>
+                        <button 
+                            type="button"
+                            className="flex grow bg-red-600"
+                            onClick={() => setValue("plan", "advanced")}
+                            >
+                            Advanced
+                            $12/mo
+                        </button>
+                            
 
-                    <button>
-                        Pro
-                        $15/mo
-                    </button>
+                        <button 
+                            type="button"
+                            value={"pro"} 
+                            className="flex grow bg-slate-600"
+                            onClick={() => setValue("plan", "advanced")}
+                            >
+                            Pro
+                            $15/mo
+                        </button>
+                    </div>
 
                     <div>
                         Monthly
@@ -249,7 +266,7 @@ export default function Form({}: FormProps) {
 
                 <!-- Step 5 start --> */}
 
-                { currentStep === 5 && <div>
+                { currentStep === COMPLETE_STEP && <div>
 
                     <img src="../assets/images/icon-thank-you.svg" alt="" />
 
@@ -281,7 +298,7 @@ export default function Form({}: FormProps) {
                     <button 
                         disabled={currentStep !== LAST_STEP}
                         type="submit" 
-                        className="flex w-min text-nowrap bg-brand-marine-blue text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:hidden"
+                        className="flex w-min text-nowrap bg-brand-purplish-blue text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:hidden"
                     >Confirm</button>
                 </div>
             </form>
