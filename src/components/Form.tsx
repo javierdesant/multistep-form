@@ -330,19 +330,21 @@ export default function Form({}: FormProps) {
 
                 </div> }
 
-                {/* <!-- Step 5 end --> */}
+                {/* <!-- Step 5 end --> 
+
+                <!-- Navigation start --> */}
 
                 <div className="flex justify-between mt-auto mb-4">
                     <button 
                         disabled={currentStep === 1 || currentStep === COMPLETE_STEP} 
                         type="button"
-                        className="flex w-min text-nowrap text-brand-cool-gray my-3 disabled:invisible"
+                        className="flex w-min text-nowrap text-brand-cool-gray font-medium hover:text-brand-marine-blue my-3 disabled:invisible"
                         onClick={() => { handleNav(currentStep - 1) }}
                     >Go Back</button>
                     <button 
                         disabled={currentStep === LAST_STEP || currentStep === COMPLETE_STEP} 
                         type="button"
-                        className="flex w-min text-nowrap bg-brand-marine-blue text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:hidden"
+                        className="flex w-min text-nowrap bg-brand-marine-blue hover:bg-blue-900 text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:hidden"
                         onClick={() => { handleNav(currentStep + 1) }}
                     >Next Step</button>
                     <button 
@@ -351,6 +353,8 @@ export default function Form({}: FormProps) {
                         className="flex w-min text-nowrap bg-brand-purplish-blue text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:hidden"
                     >Confirm</button>
                 </div>
+
+                {/* <!-- Navigation end --> */}
             </form>
         </div>
      );
