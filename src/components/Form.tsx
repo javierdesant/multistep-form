@@ -88,7 +88,7 @@ export default function Form({}: FormProps) {
 
 
     return ( 
-        <div className="flex grow bg-white p-5">
+        <div className="flex w-full h-full max-w-[1050px] max-h-[600px] bg-white p-4 rounded-2xl shadow-xl">
             {/* <!-- Sidebar start --> */}
 
             <div className="flex flex-col w-[274px] min-h-[568px] shrink-0 p-5 pt-7 bg-sidebar-desktop rounded-xl">
@@ -111,7 +111,7 @@ export default function Form({}: FormProps) {
             {/* <!-- Sidebar end --> */}
 
             <form 
-                className="flex grow flex-col px-24"
+                className="flex flex-col grow px-24"
                 onSubmit={handleSubmit(onSubmit)}
                 noValidate
             >
@@ -162,7 +162,7 @@ export default function Form({}: FormProps) {
 
                 <!-- Step 2 start --> */}
 
-                { currentStep === 2 && <div>
+                { currentStep === 2 && <div className="flex flex-col">
 
                     <h1>Select your plan</h1>
                     <p>You have the option of monthly or yearly billing.</p>
@@ -173,7 +173,7 @@ export default function Form({}: FormProps) {
                             className={`flex flex-col justify-between ring-1 p-5 h-52 ${watch("plan") === "arcade" ? "ring-brand-purplish-blue bg-brand-light-blue" : "ring-brand-light-gray"} rounded-xl`}
                             onClick={() => {
                                 if (getValues("plan") === "arcade") {
-                                    resetField("plan", { defaultValue: undefined })
+                                    resetField("plan", { defaultValue: undefined })     // FIXME
                                 } else {
                                     setValue("plan", "arcade")
                                 } 
@@ -189,7 +189,7 @@ export default function Form({}: FormProps) {
                         <button 
                             type="button"
                             className={`flex flex-col justify-between ring-1 p-5 h-52 ${watch("plan") === "advanced" ? "ring-brand-purplish-blue bg-brand-light-blue" : "ring-brand-light-gray"} rounded-xl`}
-                            onClick={() => getValues("plan") === "advanced" ? resetField("plan", { defaultValue: undefined }) : setValue("plan", "advanced")}
+                            onClick={() => getValues("plan") === "advanced" ? resetField("plan", { defaultValue: undefined }) : setValue("plan", "advanced")}   // FIXME
                         >
                             <img src="/img/icon-advanced.svg" alt="advanced-icon" className="h-14 place-self-start" />
                             <div>
@@ -202,7 +202,7 @@ export default function Form({}: FormProps) {
                         <button 
                             type="button"
                             className={`flex flex-col justify-between ring-1 p-5 h-52 ${watch("plan") === "pro" ? "ring-brand-purplish-blue bg-brand-light-blue" : "ring-brand-light-gray"} rounded-xl`}
-                            onClick={() => watch("plan") === "pro" ? resetField("plan", { defaultValue: undefined }) : setValue("plan", "pro")}
+                            onClick={() => watch("plan") === "pro" ? resetField("plan", { defaultValue: undefined }) : setValue("plan", "pro")}     // FIXME
                         >
                             <img src="/img/icon-pro.svg" alt="pro-icon" className="h-14 place-self-start" />
                             <div>
@@ -234,7 +234,7 @@ export default function Form({}: FormProps) {
                         />
                         <div>
                             <h2>Online service</h2>
-                            <p>Access to multiplayer games</p>
+                            <p className="m-0">Access to multiplayer games</p>
                         </div>
                         <span>+$1/mo</span>
                     </div>
@@ -245,7 +245,7 @@ export default function Form({}: FormProps) {
                         />
                         <div>
                             <h2>Larger storage</h2>
-                            <p>Extra 1TB of cloud save</p>
+                            <p className="m-0">Extra 1TB of cloud save</p>
                         </div>
                         <span>+$2/mo</span>
                     </div>
@@ -256,7 +256,7 @@ export default function Form({}: FormProps) {
                         />
                         <div>
                             <h2>Customizable Profile</h2>
-                            <p>Custom theme on your profile</p>
+                            <p className="m-0">Custom theme on your profile</p>
                         </div>
                         <span>+$2/mo</span>
                     </div>
@@ -283,13 +283,11 @@ export default function Form({}: FormProps) {
 
                 <!-- Step 5 start --> */}
 
-                { currentStep === COMPLETE_STEP && <div>
+                { currentStep === COMPLETE_STEP && <div className="flex grow flex-col justify-center items-center">
 
-                    <img src="/img/icon-thank-you.svg" alt="thank-you-icon" />
-
+                    <img src="/img/icon-thank-you.svg" alt="thank-you-icon" className="w-20" />
                     <h1>Thank you!</h1>
-
-                    <p>
+                    <p className="text-center text-pretty mt-3">
                         Thanks for confirming your subscription! We hope you have fun 
                         using our platform. If you ever need support, please feel free 
                         to email us at support@loremgaming.com.
