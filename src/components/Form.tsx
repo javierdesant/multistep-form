@@ -164,34 +164,43 @@ export default function Form({}: FormProps) {
                     <h1>Select your plan</h1>
                     <p>You have the option of monthly or yearly billing.</p>
 
-                    <div className="grid grid-cols-3 grid-rows-1">
+                    <div className="grid grid-cols-3 grid-rows-1 gap-5">
                         <button 
                             type="button"
-                            className="flex grow bg-green-600"
+                            className="flex flex-col justify-between ring-1 p-5 h-52 ring-brand-light-gray rounded-xl"
                             onClick={() => setValue("plan", "advanced")}
                         >
-                            Arcade
-                            $9/mo
+                            <img src="/img/icon-arcade.svg" alt="arcade-icon" className="h-14 place-self-start" />
+                            <div>
+                                <h3 className=" text-xl text-left font-medium text-brand-marine-blue">Arcade</h3>
+                                <p className="mb-0 text-left">$9/mo</p>
+                            </div>
                         </button>
 
                         <button 
                             type="button"
-                            className="flex grow bg-red-600"
+                            className="flex flex-col justify-between ring-1 p-5 h-52 ring-brand-light-gray rounded-xl"
                             onClick={() => setValue("plan", "advanced")}
-                            >
-                            Advanced
-                            $12/mo
+                        >
+                            <img src="/img/icon-advanced.svg" alt="advanced-icon" className="h-14 place-self-start" />
+                            <div>
+                                <h3 className=" text-xl text-left font-medium text-brand-marine-blue">Advanced</h3>
+                                <p className="mb-0 text-left">$12/mo</p>
+                            </div>
                         </button>
                             
 
                         <button 
                             type="button"
                             value={"pro"} 
-                            className="flex grow bg-slate-600"
+                            className="flex flex-col justify-between ring-1 p-5 h-52 ring-brand-light-gray rounded-xl"
                             onClick={() => setValue("plan", "advanced")}
-                            >
-                            Pro
-                            $15/mo
+                        >
+                            <img src="/img/icon-pro.svg" alt="pro-icon" className="h-14 place-self-start" />
+                            <div>
+                                <h3 className=" text-xl text-left font-medium text-brand-marine-blue">Pro</h3>
+                                <p className="mb-0 text-left">$15/mo</p>
+                            </div>
                         </button>
                     </div>
 
