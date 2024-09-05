@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { formDataSchema } from '../lib/schema.ts'
+import ToggleSwitch from "./ToggleSwitch.tsx"
 
 interface FormProps {}
 
@@ -204,7 +205,6 @@ export default function Form({}: FormProps) {
                                 <p className="mb-0 text-left">$12/mo</p>
                             </div>
                         </button>
-                            
 
                         <button 
                             type="button"
@@ -219,13 +219,15 @@ export default function Form({}: FormProps) {
                         </button>
                     </div>
 
-                    <div>
-                        Monthly
-                        Yearly
+                    <div className="flex h-12 w-full my-10 bg-brand-magnolia justify-center items-center">
+
+                        <ToggleSwitch
+                            value="billing"
+                            label1="Monthly"
+                            label2="Yearly"
+                        />
+
                     </div>
-                    <button>
-                        TEST
-                    </button>
 
                 </div> }
 
