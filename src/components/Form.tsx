@@ -287,7 +287,7 @@ export default function Form({}: FormProps) {
 
                     <img src="/img/icon-thank-you.svg" alt="thank-you-icon" className="w-20" />
                     <h1>Thank you!</h1>
-                    <p className="text-center text-pretty mt-3">
+                    <p className="text-center text-pretty text-lg tracking-wide mt-3 mx-3">
                         Thanks for confirming your subscription! We hope you have fun 
                         using our platform. If you ever need support, please feel free 
                         to email us at support@loremgaming.com.
