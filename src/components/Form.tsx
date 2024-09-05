@@ -184,7 +184,7 @@ export default function Form({}: FormProps) {
                     <div className="grid grid-cols-3 grid-rows-1 gap-5">
                         <button 
                             type="button"
-                            className={`flex flex-col justify-between ring-1 p-5 h-52 ${watch("plan") === "arcade" ? "ring-brand-purplish-blue bg-brand-light-blue" : "ring-brand-light-gray"} rounded-xl`}
+                            className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue ${watch("plan") === "arcade" ? "ring-brand-purplish-blue bg-brand-magnolia" : "ring-brand-light-gray"} rounded-xl`}
                             onClick={() => handleTogglePlan("arcade")}
                         >
                             <img src="/img/icon-arcade.svg" alt="arcade-icon" className="h-14 place-self-start" />
@@ -196,7 +196,7 @@ export default function Form({}: FormProps) {
 
                         <button 
                             type="button"
-                            className={`flex flex-col justify-between ring-1 p-5 h-52 ${watch("plan") === "advanced" ? "ring-brand-purplish-blue bg-brand-light-blue" : "ring-brand-light-gray"} rounded-xl`}
+                            className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue ${watch("plan") === "advanced" ? "ring-brand-purplish-blue bg-brand-magnolia" : "ring-brand-light-gray"} rounded-xl`}
                             onClick={() => handleTogglePlan("advanced")}
                         >
                             <img src="/img/icon-advanced.svg" alt="advanced-icon" className="h-14 place-self-start" />
@@ -208,7 +208,7 @@ export default function Form({}: FormProps) {
 
                         <button 
                             type="button"
-                            className={`flex flex-col justify-between ring-1 p-5 h-52 ${watch("plan") === "pro" ? "ring-brand-purplish-blue bg-brand-light-blue" : "ring-brand-light-gray"} rounded-xl`}
+                            className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue ${watch("plan") === "pro" ? "ring-brand-purplish-blue bg-brand-magnolia" : "ring-brand-light-gray"} rounded-xl`}
                             onClick={() => handleTogglePlan("pro")}
                         >
                             <img src="/img/icon-pro.svg" alt="pro-icon" className="h-14 place-self-start" />
