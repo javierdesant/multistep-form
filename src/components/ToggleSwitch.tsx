@@ -15,7 +15,7 @@ export default function ToggleSwitch({ value, label1, label2 }: ToggleSwitchProp
   return (
     <div className="flex">
         <button id="checker1" type="button" role="label"
-            className="font-medium text-base focus:outline-none focus:outline-brand-purplish-blue"
+            className="font-medium text-base"
             onClick={() => handleCheck(false)}
         >{label1}</button>
         <label className="cursor-pointer">
@@ -27,7 +27,7 @@ export default function ToggleSwitch({ value, label1, label2 }: ToggleSwitchProp
                 after:h-4 after:w-4 after:transition-all" />
         </label>
         <button id="checker2" type="button" role="label"
-            className="font-medium text-base focus:outline-none focus:outline-brand-purplish-blue"
+            className="font-medium text-base"
             onClick={() => handleCheck(true)}
         >{label2}</button>
     </div>

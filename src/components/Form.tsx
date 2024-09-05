@@ -188,6 +188,7 @@ export default function Form({}: FormProps) {
                         <button 
                             type="button"
                             className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue rounded-xl
+                                hover:ring-brand-purplish-blue
                                 ${errors.plan 
                                     ? "ring-1 ring-brand-strawberry-red" 
                                     : watch("plan") === "arcade" 
@@ -206,6 +207,7 @@ export default function Form({}: FormProps) {
                         <button 
                             type="button"
                             className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue rounded-xl
+                                hover:ring-brand-purplish-blue
                                 ${errors.plan 
                                     ? "ring-1 ring-brand-strawberry-red" 
                                     : watch("plan") === "advanced" 
@@ -224,6 +226,7 @@ export default function Form({}: FormProps) {
                         <button 
                             type="button"
                             className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue rounded-xl
+                                hover:ring-brand-purplish-blue
                                 ${errors.plan 
                                     ? "ring-1 ring-brand-strawberry-red" 
                                     : watch("plan") === "pro" 
@@ -350,7 +353,7 @@ export default function Form({}: FormProps) {
                     <button 
                         disabled={currentStep !== LAST_STEP}
                         type="submit" 
-                        className="flex w-min text-nowrap bg-brand-purplish-blue text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:hidden"
+                        className="flex w-min text-nowrap bg-brand-purplish-blue text-brand-magnolia font-medium py-3 px-7 rounded-lg disabled:hidden"
                     >Confirm</button>
                 </div>
 
