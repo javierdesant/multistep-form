@@ -44,7 +44,7 @@ export default function Form({}: FormProps) {
         setValue,
         watch,
         getValues,
-        resetField,
+        reset,
         formState: { 
             errors,
         },
@@ -85,6 +85,17 @@ export default function Form({}: FormProps) {
             setCurrentStep(failedStep)
         }
     }
+
+    const handleTogglePlan = (plan: FormValues["plan"]) => {
+        if (getValues("plan") === plan) {
+            reset({
+                ...getValues(),
+                plan: undefined
+            });
+        } else {
+            setValue("plan", plan);
+        }
+    };
 
 
     return ( 
@@ -173,13 +184,7 @@ export default function Form({}: FormProps) {
                         <button 
                             type="button"
                             className={`flex flex-col justify-between ring-1 p-5 h-52 ${watch("plan") === "arcade" ? "ring-brand-purplish-blue bg-brand-light-blue" : "ring-brand-light-gray"} rounded-xl`}
-                            onClick={() => {
-                                if (getValues("plan") === "arcade") {
-                                    resetField("plan", { defaultValue: undefined })     // FIXME
-                                } else {
-                                    setValue("plan", "arcade")
-                                } 
-                            }}
+                            onClick={() => handleTogglePlan("arcade")}
                         >
                             <img src="/img/icon-arcade.svg" alt="arcade-icon" className="h-14 place-self-start" />
                             <div>
@@ -191,7 +196,7 @@ export default function Form({}: FormProps) {
                         <button 
                             type="button"
                             className={`flex flex-col justify-between ring-1 p-5 h-52 ${watch("plan") === "advanced" ? "ring-brand-purplish-blue bg-brand-light-blue" : "ring-brand-light-gray"} rounded-xl`}
-                            onClick={() => getValues("plan") === "advanced" ? resetField("plan", { defaultValue: undefined }) : setValue("plan", "advanced")}   // FIXME
+                            onClick={() => handleTogglePlan("advanced")}
                         >
                             <img src="/img/icon-advanced.svg" alt="advanced-icon" className="h-14 place-self-start" />
                             <div>
@@ -204,7 +209,7 @@ export default function Form({}: FormProps) {
                         <button 
                             type="button"
                             className={`flex flex-col justify-between ring-1 p-5 h-52 ${watch("plan") === "pro" ? "ring-brand-purplish-blue bg-brand-light-blue" : "ring-brand-light-gray"} rounded-xl`}
-                            onClick={() => watch("plan") === "pro" ? resetField("plan", { defaultValue: undefined }) : setValue("plan", "pro")}     // FIXME
+                            onClick={() => handleTogglePlan("pro")}
                         >
                             <img src="/img/icon-pro.svg" alt="pro-icon" className="h-14 place-self-start" />
                             <div>
@@ -218,6 +223,9 @@ export default function Form({}: FormProps) {
                         Monthly
                         Yearly
                     </div>
+                    <button>
+                        TEST
+                    </button>
 
                 </div> }
 
