@@ -11,7 +11,7 @@ export default function ToggleSwitch({ value, onChange, label1, label2 }: Toggle
   return (
     <div className="flex">
         <button id="checker1" type="button" role="label"
-            className="font-medium text-base"
+            className="font-medium text-base hover:underline"
             onClick={() => onChange("monthly")}
         >{label1}</button>
         <label className="cursor-pointer">
@@ -23,7 +23,7 @@ export default function ToggleSwitch({ value, onChange, label1, label2 }: Toggle
                 after:h-4 after:w-4 after:transition-all" />
         </label>
         <button id="checker2" type="button" role="label"
-            className="font-medium text-base"
+            className="font-medium text-base hover:underline"
             onClick={() => onChange("yearly")}
         >{label2}</button>
     </div>

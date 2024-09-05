@@ -204,9 +204,10 @@ export default function Form({}: FormProps) {
                             onClick={() => handleTogglePlan("arcade")}
                         >
                             <img src="/img/icon-arcade.svg" alt="arcade-icon" className="h-14 place-self-start" />
-                            <div>
+                            <div className="flex flex-col">
                                 <h3 className=" text-xl text-left font-medium text-brand-marine-blue">Arcade</h3>
-                                <p className="mb-0 text-left">$9/mo</p>
+                                <p className="mb-0 text-left">{getValues("billing") === "yearly" ? "$90/yr" : "$9/mo"}</p>
+                                {watch("billing") === "yearly" && <span className="text-sm text-brand-marine-blue text-left mt-2">2 months free</span>}
                             </div>
                         </button>
 
@@ -223,9 +224,10 @@ export default function Form({}: FormProps) {
                             onClick={() => handleTogglePlan("advanced")}
                         >
                             <img src="/img/icon-advanced.svg" alt="advanced-icon" className="h-14 place-self-start" />
-                            <div>
+                            <div className="flex flex-col">
                                 <h3 className=" text-xl text-left font-medium text-brand-marine-blue">Advanced</h3>
-                                <p className="mb-0 text-left">$12/mo</p>
+                                <p className="mb-0 text-left">{getValues("billing") === "yearly" ? "$120/yr" : "$12/mo"}</p>
+                                {watch("billing") === "yearly" && <span className="text-sm text-brand-marine-blue text-left mt-2">2 months free</span>}
                             </div>
                         </button>
 
@@ -242,9 +244,10 @@ export default function Form({}: FormProps) {
                             onClick={() => handleTogglePlan("pro")}
                         >
                             <img src="/img/icon-pro.svg" alt="pro-icon" className="h-14 place-self-start" />
-                            <div>
+                            <div className="flex flex-col">
                                 <h3 className=" text-xl text-left font-medium text-brand-marine-blue">Pro</h3>
-                                <p className="mb-0 text-left">$15/mo</p>
+                                <p className="mb-0 text-left">{getValues("billing") === "yearly" ? "$150/yr" : "$15/mo"}</p>
+                                {watch("billing") === "yearly" && <span className="text-sm text-brand-marine-blue text-left mt-2">2 months free</span>}
                             </div>
                         </button>
                     </div>
@@ -252,7 +255,6 @@ export default function Form({}: FormProps) {
                     { errors.plan && <span className=" text-sm text-center mt-3 font-bold text-brand-strawberry-red">{errors.plan.message}</span> }
 
                     <div className="flex h-12 w-full my-10 bg-brand-magnolia justify-center items-center">
-                        
                         <Controller 
                             control={control}
                             name="billing"
@@ -265,9 +267,6 @@ export default function Form({}: FormProps) {
                                 />
                             )}
                         />
-
-                        <button type="submit">TEST</button>
-
                     </div>
 
                 </div> }
@@ -276,7 +275,7 @@ export default function Form({}: FormProps) {
 
                 <!-- Step 3 start --> */}
 
-                { currentStep === 3 && <div>
+                { currentStep === 3 && <div className="flex flex-col">
 
                     <h1>Pick add-ons</h1>
                     <p>Add-ons help enhance your gaming experience.</p>
