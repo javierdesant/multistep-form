@@ -2,10 +2,10 @@ import { useCallback, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
-import { formDataSchema } from '../lib/schema.ts'
+import 'react-phone-number-input/style.css'
 import ToggleSwitch from "./ToggleSwitch.tsx"
+import { formDataSchema } from '../lib/schema.ts'
 
 interface FormProps {}
 
@@ -50,12 +50,13 @@ export default function Form({}: FormProps) {
             errors,
         },
     } = useForm<FormValues>({
+        mode: "all",
         defaultValues: {
             name: "",
             email: "",
             phone: "",
             plan: undefined,
-            billing: "montly", // TEST
+            billing: "montly",
             addons: {
                 customizableProfile: false,
                 largerStorage: false,
@@ -87,14 +88,16 @@ export default function Form({}: FormProps) {
         }
     }
 
+    let currentPlan = watch("plan")
+
     const handleTogglePlan = (plan: FormValues["plan"]) => {
-        if (getValues("plan") === plan) {
+        if (currentPlan === plan) {
             reset({
                 ...getValues(),
                 plan: undefined
             });
         } else {
-            setValue("plan", plan);
+            setValue("plan", plan, { shouldValidate: true });
         }
     };
 
@@ -184,7 +187,13 @@ export default function Form({}: FormProps) {
                     <div className="grid grid-cols-3 grid-rows-1 gap-5">
                         <button 
                             type="button"
-                            className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue ${watch("plan") === "arcade" ? "ring-brand-purplish-blue bg-brand-magnolia" : "ring-brand-light-gray"} rounded-xl`}
+                            className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue rounded-xl
+                                ${errors.plan 
+                                    ? "ring-1 ring-brand-strawberry-red" 
+                                    : watch("plan") === "arcade" 
+                                        ? "ring-brand-purplish-blue bg-brand-magnolia" 
+                                        : "ring-brand-light-gray"
+                                }`}
                             onClick={() => handleTogglePlan("arcade")}
                         >
                             <img src="/img/icon-arcade.svg" alt="arcade-icon" className="h-14 place-self-start" />
@@ -196,7 +205,13 @@ export default function Form({}: FormProps) {
 
                         <button 
                             type="button"
-                            className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue ${watch("plan") === "advanced" ? "ring-brand-purplish-blue bg-brand-magnolia" : "ring-brand-light-gray"} rounded-xl`}
+                            className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue rounded-xl
+                                ${errors.plan 
+                                    ? "ring-1 ring-brand-strawberry-red" 
+                                    : watch("plan") === "advanced" 
+                                        ? "ring-brand-purplish-blue bg-brand-magnolia" 
+                                        : "ring-brand-light-gray"
+                                }`}
                             onClick={() => handleTogglePlan("advanced")}
                         >
                             <img src="/img/icon-advanced.svg" alt="advanced-icon" className="h-14 place-self-start" />
@@ -208,7 +223,13 @@ export default function Form({}: FormProps) {
 
                         <button 
                             type="button"
-                            className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue ${watch("plan") === "pro" ? "ring-brand-purplish-blue bg-brand-magnolia" : "ring-brand-light-gray"} rounded-xl`}
+                            className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue rounded-xl
+                                ${errors.plan 
+                                    ? "ring-1 ring-brand-strawberry-red" 
+                                    : watch("plan") === "pro" 
+                                        ? "ring-brand-purplish-blue bg-brand-magnolia" 
+                                        : "ring-brand-light-gray"
+                                }`}
                             onClick={() => handleTogglePlan("pro")}
                         >
                             <img src="/img/icon-pro.svg" alt="pro-icon" className="h-14 place-self-start" />
@@ -218,6 +239,8 @@ export default function Form({}: FormProps) {
                             </div>
                         </button>
                     </div>
+
+                    { errors.plan && <span className=" text-sm text-center mt-3 font-bold text-brand-strawberry-red">{errors.plan.message}</span> }
 
                     <div className="flex h-12 w-full my-10 bg-brand-magnolia justify-center items-center">
 
