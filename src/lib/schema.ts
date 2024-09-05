@@ -8,7 +8,7 @@ export const formDataSchema = z.object({
         message: "Please enter a valid phone number"
     }),
     plan: z.enum(["arcade", "advanced", "pro"], { message: 'Please select a plan' }),
-    billing: z.enum(["montly", "yearly"]),
+    billing: z.enum(["monthly", "yearly"]),
     addons: z.object({
         onlineService: z.boolean(),
         largerStorage: z.boolean(),

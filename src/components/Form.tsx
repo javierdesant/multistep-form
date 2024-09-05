@@ -6,6 +6,7 @@ import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import ToggleSwitch from "./ToggleSwitch.tsx"
 import { formDataSchema } from '../lib/schema.ts'
+import { DevTool } from "@hookform/devtools";
 
 interface FormProps {}
 
@@ -56,7 +57,7 @@ export default function Form({}: FormProps) {
             email: "",
             phone: "",
             plan: undefined,
-            billing: "montly",
+            billing: "monthly",
             addons: {
                 customizableProfile: false,
                 largerStorage: false,
@@ -69,6 +70,10 @@ export default function Form({}: FormProps) {
     const onSubmit = useCallback((values: FormValues) => {
         window.alert(JSON.stringify(values, null, 4))
         setCurrentStep(COMPLETE_STEP)
+    }, [])
+
+    const onError = useCallback((values: FormValues) => {
+        window.alert(JSON.stringify(values, null, 4))
     }, [])
 
     const handleNav = async (index: number) => {
@@ -95,7 +100,7 @@ export default function Form({}: FormProps) {
             reset({
                 ...getValues(),
                 plan: undefined
-            });
+            }, { keepDirty: true, keepTouched: true });
         } else {
             setValue("plan", plan, { shouldValidate: true });
         }
@@ -128,6 +133,7 @@ export default function Form({}: FormProps) {
             <form 
                 className="flex flex-col grow px-24"
                 onSubmit={handleSubmit(onSubmit)}
+                onError={() => onError}
                 noValidate
             >
 
@@ -170,7 +176,7 @@ export default function Form({}: FormProps) {
                                 onChange={onChange}
                                 defaultCountry="US"
                                 placeholder="e.g. +1 234 567 890"
-                                />
+                            />
                         )}
                     />
                 </div> }
@@ -246,12 +252,21 @@ export default function Form({}: FormProps) {
                     { errors.plan && <span className=" text-sm text-center mt-3 font-bold text-brand-strawberry-red">{errors.plan.message}</span> }
 
                     <div className="flex h-12 w-full my-10 bg-brand-magnolia justify-center items-center">
-
-                        <ToggleSwitch
-                            value="billing"
-                            label1="Monthly"
-                            label2="Yearly"
+                        
+                        <Controller 
+                            control={control}
+                            name="billing"
+                            render={({ field: { onChange, value } }) => (
+                                <ToggleSwitch
+                                    value={value}
+                                    onChange={onChange}
+                                    label1="Monthly"
+                                    label2="Yearly"
+                                />
+                            )}
                         />
+
+                        <button type="submit">TEST</button>
 
                     </div>
 
@@ -359,6 +374,8 @@ export default function Form({}: FormProps) {
 
                 {/* <!-- Navigation end --> */}
             </form>
+            
+            <DevTool control={control} /> {/* set up the dev tool */}
         </div>
      );
 }
