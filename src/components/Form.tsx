@@ -42,6 +42,9 @@ export default function Form({}: FormProps) {
         trigger,
         handleSubmit,
         setValue,
+        watch,
+        getValues,
+        resetField,
         formState: { 
             errors,
         },
@@ -167,8 +170,14 @@ export default function Form({}: FormProps) {
                     <div className="grid grid-cols-3 grid-rows-1 gap-5">
                         <button 
                             type="button"
-                            className="flex flex-col justify-between ring-1 p-5 h-52 ring-brand-light-gray rounded-xl"
-                            onClick={() => setValue("plan", "advanced")}
+                            className={`flex flex-col justify-between ring-1 p-5 h-52 ${watch("plan") === "arcade" ? "ring-brand-purplish-blue bg-brand-light-blue" : "ring-brand-light-gray"} rounded-xl`}
+                            onClick={() => {
+                                if (getValues("plan") === "arcade") {
+                                    resetField("plan", { defaultValue: undefined })
+                                } else {
+                                    setValue("plan", "arcade")
+                                } 
+                            }}
                         >
                             <img src="/img/icon-arcade.svg" alt="arcade-icon" className="h-14 place-self-start" />
                             <div>
@@ -179,8 +188,8 @@ export default function Form({}: FormProps) {
 
                         <button 
                             type="button"
-                            className="flex flex-col justify-between ring-1 p-5 h-52 ring-brand-light-gray rounded-xl"
-                            onClick={() => setValue("plan", "advanced")}
+                            className={`flex flex-col justify-between ring-1 p-5 h-52 ${watch("plan") === "advanced" ? "ring-brand-purplish-blue bg-brand-light-blue" : "ring-brand-light-gray"} rounded-xl`}
+                            onClick={() => getValues("plan") === "advanced" ? resetField("plan", { defaultValue: undefined }) : setValue("plan", "advanced")}
                         >
                             <img src="/img/icon-advanced.svg" alt="advanced-icon" className="h-14 place-self-start" />
                             <div>
@@ -192,9 +201,8 @@ export default function Form({}: FormProps) {
 
                         <button 
                             type="button"
-                            value={"pro"} 
-                            className="flex flex-col justify-between ring-1 p-5 h-52 ring-brand-light-gray rounded-xl"
-                            onClick={() => setValue("plan", "advanced")}
+                            className={`flex flex-col justify-between ring-1 p-5 h-52 ${watch("plan") === "pro" ? "ring-brand-purplish-blue bg-brand-light-blue" : "ring-brand-light-gray"} rounded-xl`}
+                            onClick={() => watch("plan") === "pro" ? resetField("plan", { defaultValue: undefined }) : setValue("plan", "pro")}
                         >
                             <img src="/img/icon-pro.svg" alt="pro-icon" className="h-14 place-self-start" />
                             <div>
@@ -277,7 +285,7 @@ export default function Form({}: FormProps) {
 
                 { currentStep === COMPLETE_STEP && <div>
 
-                    <img src="../assets/images/icon-thank-you.svg" alt="" />
+                    <img src="/img/icon-thank-you.svg" alt="thank-you-icon" />
 
                     <h1>Thank you!</h1>
 
