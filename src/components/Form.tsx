@@ -128,6 +128,7 @@ export default function Form({}: FormProps) {
                         { errors.name && <span className=" text-sm font-bold text-brand-strawberry-red">{errors.name.message}</span> }
                     </div>
                     <input type="text" id="name" placeholder="e.g. Stephen King" 
+                        className={errors.name && "border-brand-strawberry-red" }
                         {...register("name")}
                     />
                     
@@ -136,6 +137,7 @@ export default function Form({}: FormProps) {
                         { errors.email && <span className=" text-sm font-bold text-brand-strawberry-red">{errors.email.message}</span> }
                     </div>
                     <input type="email" id="email" placeholder="e.g. stephenking@lorem.com" 
+                        className={errors.email && "border-brand-strawberry-red" }
                         {...register("email")}
                     />
 
