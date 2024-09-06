@@ -280,38 +280,46 @@ export default function Form({}: FormProps) {
                     <h1>Pick add-ons</h1>
                     <p>Add-ons help enhance your gaming experience.</p>
                     
-                    <div>
-                        <input type="checkbox" id="addons.onlineService" 
-                            {...register("addons.onlineService")}
-                        />
-                        <div>
-                            <h2>Online service</h2>
-                            <p className="m-0">Access to multiplayer games</p>
-                        </div>
-                        <span>+$1/mo</span>
-                    </div>
+                    <div className="grid grid-cols-1 grid-rows-3 gap-5">
+                        <label htmlFor="addons.onlineService" className=" cursor-pointer">
+                            <div className="flex grow items-center border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
+                                <input type="checkbox" id="addons.onlineService"
+                                    {...register("addons.onlineService")}
+                                    />
+                                <div>
+                                    <h2>Online service</h2>
+                                    <p className="m-0">Access to multiplayer games</p>
+                                </div>
+                                <span className="text-right">+$1/mo</span>
+                            </div>
+                        </label>
 
-                    <div>
-                        <input type="checkbox" id="addons.largerStorage" 
-                            {...register("addons.largerStorage")} 
-                        />
-                        <div>
-                            <h2>Larger storage</h2>
-                            <p className="m-0">Extra 1TB of cloud save</p>
-                        </div>
-                        <span>+$2/mo</span>
-                    </div>
-                    
-                    <div>
-                        <input type="checkbox" id="addons.customizableProfile"
-                            {...register("addons.customizableProfile")} 
-                        />
-                        <div>
-                            <h2>Customizable Profile</h2>
-                            <p className="m-0">Custom theme on your profile</p>
-                        </div>
-                        <span>+$2/mo</span>
-                    </div>
+                        <label htmlFor="addons.largerStorage">
+                            <div className="flex grow items-center border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
+                                <input type="checkbox" id="addons.largerStorage"
+                                    {...register("addons.largerStorage")} 
+                                    />
+                                <div>
+                                    <h2>Larger storage</h2>
+                                    <p className="m-0">Extra 1TB of cloud save</p>
+                                </div>
+                                <span className="text-right">+$2/mo</span>
+                            </div>
+                        </label>
+                        
+                        <label htmlFor="addons.customizableProfile">
+                            <div className="flex grow items-center border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
+                                <input type="checkbox" id="addons.customizableProfile"
+                                    {...register("addons.customizableProfile")} 
+                                    />
+                                <div>
+                                    <h2>Customizable Profile</h2>
+                                    <p className="m-0">Custom theme on your profile</p>
+                                </div>
+                                <span className="text-right">+$2/mo</span>
+                            </div>
+                        </label>
+                    </div>  
 
                 </div> }
 
