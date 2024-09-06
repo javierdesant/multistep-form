@@ -185,11 +185,11 @@ export default function Form({}: FormProps) {
                         name="phone"
                         render={({ field: { onChange, value } }) => (
                             <PhoneInput
-                                className="phone-input"
-                                value={value}
-                                onChange={onChange}
-                                defaultCountry="US"
-                                placeholder="e.g. +1 234 567 890"
+                            className={`phone-input ${errors.phone && "*:border-brand-strawberry-red" }`}
+                            value={value}
+                            onChange={onChange}
+                            defaultCountry="US"
+                            placeholder="e.g. +1 234 567 890"
                             />
                         )}
                     />
