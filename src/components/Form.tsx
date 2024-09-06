@@ -10,7 +10,7 @@ import { DevTool } from "@hookform/devtools";
 
 interface FormProps {}
 
-type FormValues = z.infer<typeof formDataSchema>;
+export type FormValues = z.infer<typeof formDataSchema>;
 
 type Step = {
     id: `step-${number}`
@@ -31,19 +31,34 @@ const steps: Steps = [
     { id: "step-4", name: "Summary", fields: ["addons"] },
 ]
 
-type Addons = {
-    name: (keyof FormValues['addons']), 
-    title: string,
-    description: string,
-    monthlyPrice: `+${string}/mo`, 
-    yearlyPrice: `+${string}/yr` 
-}[]
+type Addon = {
+    name: keyof FormValues['addons']
+    title: string
+    description: string
+    price: number
+    monthlyPrice: `+${number}/mo`
+    yearlyPrice: `+${number}/yr`
+}
 
-const addons: Addons = [
-    { name: "onlineService", title: "Online service", description: "Access to multiplayer games", monthlyPrice: "+$1/mo", yearlyPrice: "+$10/yr" },
-    { name: "largerStorage", title: "Larger storage", description: "Extra 1TB of cloud save", monthlyPrice: "+$2/mo", yearlyPrice: "+$20/yr" },
-    { name: "customizableProfile", title: "Customizable profile", description: "Custom theme on your profile", monthlyPrice: "+$2/mo", yearlyPrice: "+$20/yr" },
-]
+const createAddon = (
+    name: keyof FormValues['addons'],
+    title: string, 
+    description: string, 
+    price: number
+): Addon => ({
+    name,
+    title,
+    description,
+    price,
+    monthlyPrice: `+${price}/mo`,
+    yearlyPrice: `+${price * 10}/yr`
+})
+
+export const addons: Addon[] = [
+    createAddon("onlineService", "Online service", "Access to multiplayer games", 1),
+    createAddon("largerStorage", "Larger storage", "Extra 1TB of cloud save", 2),
+    createAddon("customizableProfile", "Customizable profile", "Custom theme on your profile", 2),
+];
 
 const LAST_STEP = steps.length - 1;
 const COMPLETE_STEP = 0;
@@ -81,13 +96,22 @@ export default function Form({}: FormProps) {
         resolver: zodResolver(formDataSchema)
     })
 
-    const onSubmit = useCallback((values: FormValues) => {
-        window.alert(JSON.stringify(values, null, 4))
-        setCurrentStep(COMPLETE_STEP)
-    }, [])
+    const onSubmit = useCallback((data: FormValues) => {
+        const selectedAddons = Object.fromEntries(
+            Object.entries(data.addons).filter(([_, value]) => value)
+        )
+    
+        const filteredData = {
+            ...data,
+            addons: selectedAddons,
+        }
+    
+        window.alert(JSON.stringify(filteredData, null, 4));
+        setCurrentStep(COMPLETE_STEP);
+    }, []);
 
     const onError = useCallback((values: FormValues) => {
-        window.alert(JSON.stringify(values, null, 4))
+        window.alert("ERROR:\n" + JSON.stringify(values, null, 4))
     }, [])
 
     const handleNav = async (index: number) => {
