@@ -281,42 +281,42 @@ export default function Form({}: FormProps) {
                     <p>Add-ons help enhance your gaming experience.</p>
                     
                     <div className="grid grid-cols-1 grid-rows-3 gap-5">
-                        <label htmlFor="addons.onlineService" className=" cursor-pointer">
-                            <div className="flex grow items-center border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
-                                <input type="checkbox" id="addons.onlineService"
+                        <label htmlFor="addons.onlineService" className="text-base cursor-pointer">
+                            <div className="flex grow items-center justify-between border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
+                                <input type="checkbox" className=" text-brand-purplish-blue rounded mr-5 size-5" id="addons.onlineService"
                                     {...register("addons.onlineService")}
                                     />
-                                <div>
+                                <div className="flex flex-col grow">
                                     <h2>Online service</h2>
                                     <p className="m-0">Access to multiplayer games</p>
                                 </div>
-                                <span className="text-right">+$1/mo</span>
+                                <span className="text-right text-brand-purplish-blue">{getValues("billing") === "yearly" ? "+$10/yr" : "+$1/mo"}</span>
                             </div>
                         </label>
 
-                        <label htmlFor="addons.largerStorage">
-                            <div className="flex grow items-center border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
-                                <input type="checkbox" id="addons.largerStorage"
+                        <label htmlFor="addons.largerStorage" className="text-base cursor-pointer">
+                            <div className="flex grow items-center justify-between border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
+                                <input type="checkbox" className=" text-brand-purplish-blue rounded mr-5 size-5" id="addons.largerStorage"
                                     {...register("addons.largerStorage")} 
                                     />
-                                <div>
+                                <div className="flex flex-col grow">
                                     <h2>Larger storage</h2>
                                     <p className="m-0">Extra 1TB of cloud save</p>
                                 </div>
-                                <span className="text-right">+$2/mo</span>
+                                <span className="text-right text-brand-purplish-blue">{getValues("billing") === "yearly" ? "+$20/yr" : "+$2/mo"}</span>
                             </div>
                         </label>
                         
-                        <label htmlFor="addons.customizableProfile">
-                            <div className="flex grow items-center border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
-                                <input type="checkbox" id="addons.customizableProfile"
+                        <label htmlFor="addons.customizableProfile" className="text-base cursor-pointer">
+                            <div className="flex grow items-center justify-between border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
+                                <input type="checkbox" className=" text-brand-purplish-blue rounded mr-5 size-5" id="addons.customizableProfile"
                                     {...register("addons.customizableProfile")} 
                                     />
-                                <div>
+                                <div className="flex flex-col grow">
                                     <h2>Customizable Profile</h2>
                                     <p className="m-0">Custom theme on your profile</p>
                                 </div>
-                                <span className="text-right">+$2/mo</span>
+                                <span className="text-right text-brand-purplish-blue">{getValues("billing") === "yearly" ? "+$20/yr" : "+$2/mo"}</span>
                             </div>
                         </label>
                     </div>  
