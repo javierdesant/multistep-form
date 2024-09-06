@@ -395,7 +395,7 @@ export default function Form({}: FormProps) {
                     <button 
                         disabled={currentStep !== LAST_STEP}
                         type="submit" 
-                        className="flex w-min text-nowrap bg-brand-purplish-blue text-brand-magnolia font-medium py-3 px-7 rounded-lg disabled:hidden"
+                        className="flex w-min text-nowrap bg-brand-purplish-blue text-brand-magnolia font-medium py-3 px-7 rounded-lg hover:opacity-70 disabled:hidden"
                     >Confirm</button>
                 </div>
 
