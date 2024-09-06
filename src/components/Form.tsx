@@ -335,12 +335,20 @@ export default function Form({}: FormProps) {
                             </div>
                             <span className="font-bold text-brand-marine-blue">$9/mo</span> {/** TODO: make dynamic */}
                         </div>
-                        { addons.map((addon) => (
-                            getValues(`addons.${addon.name}`) && <div className="flex justify-between mt-4">
-                                <p className="m-0 text-sm">{addon.title}</p>
-                                <span className="text-sm text-brand-marine-blue">{getValues("billing") === "yearly" ? addon.yearlyPrice : addon.monthlyPrice }</span>
-                            </div>
-                        ))}
+                        { addons.every(addon => !getValues(`addons.${addon.name}`)) 
+                            ? <p className="m-0 mt-4 text-sm">No addons selected</p>
+                            : addons.map((addon) => (
+                                getValues(`addons.${addon.name}`) && (
+                                    <div className="flex justify-between mt-4" key={addon.name}>
+                                        <p className="m-0 text-sm">{addon.title}</p>
+                                        <span className="text-sm text-brand-marine-blue">
+                                            {getValues("billing") === "yearly" ? addon.yearlyPrice : addon.monthlyPrice}
+                                        </span>
+                                    </div>
+                                )
+                            ))
+                        }
+                        
                     </div>
 
                     <div className="flex justify-between items-center p-8">
