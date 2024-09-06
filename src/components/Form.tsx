@@ -287,7 +287,7 @@ export default function Form({}: FormProps) {
                                     {...register("addons.onlineService")}
                                     />
                                 <div className="flex flex-col grow">
-                                    <h2>Online service</h2>
+                                    <h2 className="font-medium">Online service</h2>
                                     <p className="m-0">Access to multiplayer games</p>
                                 </div>
                                 <span className="text-right text-brand-purplish-blue">{getValues("billing") === "yearly" ? "+$10/yr" : "+$1/mo"}</span>
@@ -300,7 +300,7 @@ export default function Form({}: FormProps) {
                                     {...register("addons.largerStorage")} 
                                     />
                                 <div className="flex flex-col grow">
-                                    <h2>Larger storage</h2>
+                                    <h2 className="font-medium">Larger storage</h2>
                                     <p className="m-0">Extra 1TB of cloud save</p>
                                 </div>
                                 <span className="text-right text-brand-purplish-blue">{getValues("billing") === "yearly" ? "+$20/yr" : "+$2/mo"}</span>
@@ -313,7 +313,7 @@ export default function Form({}: FormProps) {
                                     {...register("addons.customizableProfile")} 
                                     />
                                 <div className="flex flex-col grow">
-                                    <h2>Customizable Profile</h2>
+                                    <h2 className="font-medium">Customizable Profile</h2>
                                     <p className="m-0">Custom theme on your profile</p>
                                 </div>
                                 <span className="text-right text-brand-purplish-blue">{getValues("billing") === "yearly" ? "+$20/yr" : "+$2/mo"}</span>
