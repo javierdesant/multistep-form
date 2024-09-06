@@ -8,7 +8,7 @@
   }
 
   h1 {
-    @apply text-4xl font-bold text-brand-marine-blue mb-2 mt-8
+    @apply text-4xl font-bold text-brand-marine-blue mb-4 mt-8
   }
 
   p {
