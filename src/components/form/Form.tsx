@@ -1,18 +1,15 @@
 import { useCallback, useState } from "react"
-import { Controller, useForm } from "react-hook-form"
-import { z } from "zod"
+import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import 'react-phone-number-input/style.css'
-import ToggleSwitch from "../ToggleSwitch.tsx"
 import { formDataSchema } from '../../lib/schema.ts'
-import { DevTool } from "@hookform/devtools";
 import CompleteStep from "./CompleteStep.tsx"
+import FormValues, { Steps } from "../../types/form.types.ts"
 import Step1 from "./Step1.tsx"
-import { Addon, Steps } from "../../types/form.types.ts"
+import Step2 from "./Step2.tsx"
+import Step3 from "./Step3.tsx"
+import Step4 from "./Step4.tsx"
 
 interface FormProps {}
-
-export type FormValues = z.infer<typeof formDataSchema>;
 
 const steps: Steps = [
     { id: "complete", name: "Complete", fields: [] },
@@ -22,46 +19,14 @@ const steps: Steps = [
     { id: "step-4", name: "Summary", fields: ["addons"] },
 ]
 
-const createAddon = (
-    name: keyof FormValues['addons'],
-    title: string, 
-    description: string, 
-    price: number
-): Addon => ({
-    name,
-    title,
-    description,
-    price,
-    monthlyPrice: `+${price}/mo`,
-    yearlyPrice: `+${price * 10}/yr`
-})
-
-const addons: Addon[] = [
-    createAddon("onlineService", "Online service", "Access to multiplayer games", 1),
-    createAddon("largerStorage", "Larger storage", "Extra 1TB of cloud save", 2),
-    createAddon("customizableProfile", "Customizable profile", "Custom theme on your profile", 2),
-];
-
-export const LAST_STEP = steps.length - 1;
-export const COMPLETE_STEP = 0;
+const LAST_STEP = steps.length - 1;
+const COMPLETE_STEP = 0;
  
 export default function Form({}: FormProps) {
 
     const [currentStep, setCurrentStep] = useState(1)
 
-    const { 
-        register, 
-        control, 
-        trigger,
-        handleSubmit,
-        setValue,
-        watch,
-        getValues,
-        reset,
-        formState: { 
-            errors,
-        },
-    } = useForm<FormValues>({
+    const methods = useForm<FormValues>({
         mode: "all",
         defaultValues: {
             name: "",
@@ -100,7 +65,7 @@ export default function Form({}: FormProps) {
         let isValid = true;
         let failedStep = currentStep;
         for (let i = currentStep; i <= index && isValid; i++) {
-            isValid = await trigger(steps[i].fields)
+            isValid = await methods.trigger(steps[i].fields)
             if (!isValid) {
                 failedStep = i
             }
@@ -113,23 +78,9 @@ export default function Form({}: FormProps) {
         }
     }
 
-    let currentPlan = watch("plan")
-
-    const handleTogglePlan = (plan: FormValues["plan"]) => {
-        if (currentPlan === plan) {
-            reset({
-                ...getValues(),
-                plan: undefined
-            }, { keepDirty: true, keepTouched: true });
-        } else {
-            setValue("plan", plan, { shouldValidate: true });
-        }
-    };
-
 
     return ( 
         <div className="flex w-full h-full max-w-[1050px] max-h-[600px] bg-white p-4 rounded-2xl shadow-xl">
-            {/* <!-- Sidebar start --> */}
 
             <div className="flex flex-col w-[274px] min-h-[568px] shrink-0 p-5 pt-7 bg-sidebar-desktop rounded-xl">
                 {steps.map((step, index) => (
@@ -148,217 +99,43 @@ export default function Form({}: FormProps) {
                 ))}
             </div>
 
-            {/* <!-- Sidebar end --> */}
+            <FormProvider {...methods}>
+                <form 
+                    className="flex flex-col grow px-24"
+                    onSubmit={methods.handleSubmit(onSubmit)}
+                    onError={() => onError}
+                    noValidate
+                >
+                    
+                    { currentStep === 1 && <Step1 /> }
+                    { currentStep === 2 && <Step2 /> }
+                    { currentStep === 3 && <Step3 /> }
+                    { currentStep === 4 && <Step4 handleNav={handleNav} /> }
 
-            <form 
-                className="flex flex-col grow px-24"
-                onSubmit={handleSubmit(onSubmit)}
-                onError={() => onError}
-                noValidate
-            >
-                
-                { currentStep === 1 && <Step1 
-                    errors={errors}
-                    register={register}
-                    control={control}
-                /> }
+                    { currentStep === COMPLETE_STEP && <CompleteStep /> }
 
-                {/* <!-- Step 2 start --> */}
-
-                { currentStep === 2 && <div className="flex flex-col">
-
-                    <h1>Select your plan</h1>
-                    <p>You have the option of monthly or yearly billing.</p>
-
-                    <div className="grid grid-cols-3 grid-rows-1 gap-5">
+                    <div className="flex justify-between mt-auto mb-4">
                         <button 
+                            disabled={currentStep === 1 || currentStep === COMPLETE_STEP} 
                             type="button"
-                            className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue rounded-xl
-                                hover:ring-brand-purplish-blue
-                                ${errors.plan 
-                                    ? "ring-1 ring-brand-strawberry-red" 
-                                    : watch("plan") === "arcade" 
-                                        ? "ring-brand-purplish-blue bg-brand-magnolia" 
-                                        : "ring-brand-light-gray"
-                                }`}
-                            onClick={() => handleTogglePlan("arcade")}
-                        >
-                            <img src="/img/icon-arcade.svg" alt="arcade-icon" className="h-14 place-self-start" />
-                            <div className="flex flex-col">
-                                <h3 className=" text-xl text-left font-medium text-brand-marine-blue">Arcade</h3>
-                                <p className="mb-0 text-left">{getValues("billing") === "yearly" ? "$90/yr" : "$9/mo"}</p>
-                                {watch("billing") === "yearly" && <span className="text-sm text-brand-marine-blue text-left mt-2">2 months free</span>}
-                            </div>
-                        </button>
-
+                            className="flex w-min text-nowrap text-brand-cool-gray font-medium hover:text-brand-marine-blue my-3 disabled:invisible"
+                            onClick={() => { handleNav(currentStep - 1) }}
+                        >Go Back</button>
                         <button 
+                            disabled={currentStep === LAST_STEP || currentStep === COMPLETE_STEP} 
                             type="button"
-                            className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue rounded-xl
-                                hover:ring-brand-purplish-blue
-                                ${errors.plan 
-                                    ? "ring-1 ring-brand-strawberry-red" 
-                                    : watch("plan") === "advanced" 
-                                        ? "ring-brand-purplish-blue bg-brand-magnolia" 
-                                        : "ring-brand-light-gray"
-                                }`}
-                            onClick={() => handleTogglePlan("advanced")}
-                        >
-                            <img src="/img/icon-advanced.svg" alt="advanced-icon" className="h-14 place-self-start" />
-                            <div className="flex flex-col">
-                                <h3 className=" text-xl text-left font-medium text-brand-marine-blue">Advanced</h3>
-                                <p className="mb-0 text-left">{getValues("billing") === "yearly" ? "$120/yr" : "$12/mo"}</p>
-                                {watch("billing") === "yearly" && <span className="text-sm text-brand-marine-blue text-left mt-2">2 months free</span>}
-                            </div>
-                        </button>
-
+                            className="flex w-min text-nowrap bg-brand-marine-blue hover:bg-blue-900 text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:hidden"
+                            onClick={() => { handleNav(currentStep + 1) }}
+                        >Next Step</button>
                         <button 
-                            type="button"
-                            className={`flex flex-col justify-between ring-1 p-5 h-52 focus:outline-none focus:outline-brand-purplish-blue rounded-xl
-                                hover:ring-brand-purplish-blue
-                                ${errors.plan 
-                                    ? "ring-1 ring-brand-strawberry-red" 
-                                    : watch("plan") === "pro" 
-                                        ? "ring-brand-purplish-blue bg-brand-magnolia" 
-                                        : "ring-brand-light-gray"
-                                }`}
-                            onClick={() => handleTogglePlan("pro")}
-                        >
-                            <img src="/img/icon-pro.svg" alt="pro-icon" className="h-14 place-self-start" />
-                            <div className="flex flex-col">
-                                <h3 className=" text-xl text-left font-medium text-brand-marine-blue">Pro</h3>
-                                <p className="mb-0 text-left">{getValues("billing") === "yearly" ? "$150/yr" : "$15/mo"}</p>
-                                {watch("billing") === "yearly" && <span className="text-sm text-brand-marine-blue text-left mt-2">2 months free</span>}
-                            </div>
-                        </button>
+                            disabled={currentStep !== LAST_STEP}
+                            type="submit" 
+                            className="flex w-min text-nowrap bg-brand-purplish-blue text-brand-magnolia font-medium py-3 px-7 rounded-lg hover:opacity-70 disabled:hidden"
+                        >Confirm</button>
                     </div>
 
-                    <div className="relative flex w-full h-2">
-                        { errors.plan && <span className="absolute right-0 left-0 text-sm text-center mt-3 font-bold text-brand-strawberry-red">{errors.plan.message}</span> }
-                    </div>
-
-                    <div className="flex h-12 w-full my-10 bg-brand-magnolia justify-center items-center">
-                        <Controller 
-                            control={control}
-                            name="billing"
-                            render={({ field: { onChange, value } }) => (
-                                <ToggleSwitch
-                                    value={value}
-                                    onChange={onChange}
-                                    label1="Monthly"
-                                    label2="Yearly"
-                                />
-                            )}
-                        />
-                    </div>
-                </div> }
-
-                {/* <!-- Step 2 end -->
-
-                <!-- Step 3 start --> */}
-
-                { currentStep === 3 && <div className="flex flex-col">
-
-                    <h1>Pick add-ons</h1>
-                    <p>Add-ons help enhance your gaming experience.</p>
-
-                    <div className="grid grid-cols-1 grid-rows-3 gap-5">
-                        { addons.map((addon) => (
-                            <label htmlFor={`addons.${addon.name}`} className="text-base cursor-pointer">
-                                <div className="flex grow items-center justify-between border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
-                                    <input type="checkbox" className=" text-brand-purplish-blue rounded mr-5 size-5" id={`addons.${addon.name}`}
-                                        {...register(`addons.${addon.name}`)}
-                                        />
-                                    <div className="flex flex-col grow">
-                                        <h2 className="font-medium">{addon.title}</h2>
-                                        <p className="m-0">{addon.description}</p>
-                                    </div>
-                                    <span className="text-right text-brand-purplish-blue">{getValues("billing") === "yearly" ? addon.yearlyPrice : addon.monthlyPrice}</span>
-                                </div>
-                            </label>
-                        )) }
-                    </div>
-                </div> }
-
-                {/* <!-- Step 3 end -->
-
-                <!-- Step 4 start --> */}
-
-                { currentStep === 4 && <div>
-
-
-                    <h1>Finishing up</h1>
-                    <p>Double-check everything looks OK before confirming.</p>
-
-                    <div className="flex flex-col px-7 py-5 bg-brand-magnolia rounded-xl">
-                        <div className="flex items-center pb-5 justify-between border-b">
-                            <div className="flex flex-col text-left">
-                                <h6 className="font-medium text-brand-marine-blue capitalize">
-                                    {getValues("plan")} ({getValues("billing")})
-                                </h6>
-                                <button className="w-min" onClick={() => handleNav(2)}>
-                                    <p className="m-0 text-sm underline hover:no-underline">Change</p>
-                                </button>
-                            </div>
-                            <span className="font-bold text-brand-marine-blue">$9/mo</span> {/** TODO: make dynamic */}
-                        </div>
-                        { addons.every(addon => !getValues(`addons.${addon.name}`)) 
-                            ? <p className="m-0 mt-4 text-sm">No addons selected</p>
-                            : addons.map((addon) => (
-                                getValues(`addons.${addon.name}`) && (
-                                    <div className="flex justify-between mt-4" key={addon.name}>
-                                        <p className="m-0 text-sm">{addon.title}</p>
-                                        <span className="text-sm text-brand-marine-blue">
-                                            {getValues("billing") === "yearly" ? addon.yearlyPrice : addon.monthlyPrice}
-                                        </span>
-                                    </div>
-                                )
-                            ))
-                        }
-                        
-                    </div>
-
-                    <div className="flex justify-between items-center p-8">
-                        <p className="m-0">Total (per {getValues("billing") === "yearly" ? "year" : "month"}) </p>
-                        <span className="text-xl font-bold text-brand-purplish-blue">+12/mo</span> {/** TODO: make dynamic */}
-                    </div>
-
-                
-                </div> }
-
-                {/* <!-- Step 4 end -->
-
-                <!-- Step 5 start --> */}
-
-                { currentStep === COMPLETE_STEP && <CompleteStep /> }
-
-                {/* <!-- Step 5 end --> 
-
-                <!-- Navigation start --> */}
-
-                <div className="flex justify-between mt-auto mb-4">
-                    <button 
-                        disabled={currentStep === 1 || currentStep === COMPLETE_STEP} 
-                        type="button"
-                        className="flex w-min text-nowrap text-brand-cool-gray font-medium hover:text-brand-marine-blue my-3 disabled:invisible"
-                        onClick={() => { handleNav(currentStep - 1) }}
-                    >Go Back</button>
-                    <button 
-                        disabled={currentStep === LAST_STEP || currentStep === COMPLETE_STEP} 
-                        type="button"
-                        className="flex w-min text-nowrap bg-brand-marine-blue hover:bg-blue-900 text-brand-magnolia font-medium py-3 px-6 rounded-lg disabled:hidden"
-                        onClick={() => { handleNav(currentStep + 1) }}
-                    >Next Step</button>
-                    <button 
-                        disabled={currentStep !== LAST_STEP}
-                        type="submit" 
-                        className="flex w-min text-nowrap bg-brand-purplish-blue text-brand-magnolia font-medium py-3 px-7 rounded-lg hover:opacity-70 disabled:hidden"
-                    >Confirm</button>
-                </div>
-
-                {/* <!-- Navigation end --> */}
-            </form>
-            
-            <DevTool control={control} /> {/* set up the dev tool */}
+                </form>
+            </FormProvider>
         </div>
      );
 }

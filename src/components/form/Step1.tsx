@@ -1,8 +1,12 @@
-import { Controller } from "react-hook-form"
+import { Controller, useFormContext } from "react-hook-form"
 import PhoneInput from "react-phone-number-input"
-import { StepProps } from "../../types/form.types"
+import 'react-phone-number-input/style.css'
+import FormValues from "../../types/form.types"
 
-export default function Step1({ errors, register, control }: StepProps) {
+export default function Step1() {
+
+    const { formState: { errors }, register, control } = useFormContext<FormValues>()
+
   return (
     <div className="flex flex-col">
 

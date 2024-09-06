@@ -1,5 +1,7 @@
-import { Control, FieldErrors, UseFormRegister } from "react-hook-form"
-import { FormValues } from "../components/form/Form";
+import { z } from "zod";
+import { formDataSchema } from "../lib/schema";
+
+type FormValues = z.infer<typeof formDataSchema>;
 
 type Step = {
     id: `step-${number}`
@@ -12,12 +14,6 @@ type Steps = [
     ...Step[]
 ]
 
-type StepProps = {
-    errors: FieldErrors<FormValues>
-    register: UseFormRegister<FormValues>    
-    control: Control<FormValues, any>
-}
-
 type Addon = {
     name: keyof FormValues['addons']
     title: string
@@ -29,6 +25,7 @@ type Addon = {
 
 export {
     type Steps,
-    type StepProps,
     type Addon,
 }
+
+export default FormValues
