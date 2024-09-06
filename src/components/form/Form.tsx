@@ -4,8 +4,8 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
-import ToggleSwitch from "./ToggleSwitch.tsx"
-import { formDataSchema } from '../lib/schema.ts'
+import ToggleSwitch from "../ToggleSwitch.tsx"
+import { formDataSchema } from '../../lib/schema.ts'
 import { DevTool } from "@hookform/devtools";
 
 interface FormProps {}
@@ -60,8 +60,8 @@ export const addons: Addon[] = [
     createAddon("customizableProfile", "Customizable profile", "Custom theme on your profile", 2),
 ];
 
-const LAST_STEP = steps.length - 1;
-const COMPLETE_STEP = 0;
+export const LAST_STEP = steps.length - 1;
+export const COMPLETE_STEP = 0;
  
 export default function Form({}: FormProps) {
 
