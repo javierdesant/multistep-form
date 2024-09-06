@@ -31,6 +31,20 @@ const steps: Steps = [
     { id: "step-4", name: "Summary", fields: ["addons"] },
 ]
 
+type Addons = {
+    name: (keyof FormValues['addons']), 
+    title: string,
+    description: string,
+    monthlyPrice: `+${string}/mo`, 
+    yearlyPrice: `+${string}/yr` 
+}[]
+
+const addons: Addons = [
+    { name: "onlineService", title: "Online service", description: "Access to multiplayer games", monthlyPrice: "+$1/mo", yearlyPrice: "+$10/yr" },
+    { name: "largerStorage", title: "Larger storage", description: "Extra 1TB of cloud save", monthlyPrice: "+$2/mo", yearlyPrice: "+$20/yr" },
+    { name: "customizableProfile", title: "Customizable profile", description: "Custom theme on your profile", monthlyPrice: "+$2/mo", yearlyPrice: "+$20/yr" },
+]
+
 const LAST_STEP = steps.length - 1;
 const COMPLETE_STEP = 0;
  
@@ -268,7 +282,6 @@ export default function Form({}: FormProps) {
                             )}
                         />
                     </div>
-
                 </div> }
 
                 {/* <!-- Step 2 end -->
@@ -279,48 +292,23 @@ export default function Form({}: FormProps) {
 
                     <h1>Pick add-ons</h1>
                     <p>Add-ons help enhance your gaming experience.</p>
-                    
+
                     <div className="grid grid-cols-1 grid-rows-3 gap-5">
-                        <label htmlFor="addons.onlineService" className="text-base cursor-pointer">
-                            <div className="flex grow items-center justify-between border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
-                                <input type="checkbox" className=" text-brand-purplish-blue rounded mr-5 size-5" id="addons.onlineService"
-                                    {...register("addons.onlineService")}
-                                    />
-                                <div className="flex flex-col grow">
-                                    <h2 className="font-medium">Online service</h2>
-                                    <p className="m-0">Access to multiplayer games</p>
+                        { addons.map((addon) => (
+                            <label htmlFor={`addons.${addon.name}`} className="text-base cursor-pointer">
+                                <div className="flex grow items-center justify-between border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
+                                    <input type="checkbox" className=" text-brand-purplish-blue rounded mr-5 size-5" id={`addons.${addon.name}`}
+                                        {...register(`addons.${addon.name}`)}
+                                        />
+                                    <div className="flex flex-col grow">
+                                        <h2 className="font-medium">{addon.title}</h2>
+                                        <p className="m-0">{addon.description}</p>
+                                    </div>
+                                    <span className="text-right text-brand-purplish-blue">{getValues("billing") === "yearly" ? addon.yearlyPrice : addon.monthlyPrice}</span>
                                 </div>
-                                <span className="text-right text-brand-purplish-blue">{getValues("billing") === "yearly" ? "+$10/yr" : "+$1/mo"}</span>
-                            </div>
-                        </label>
-
-                        <label htmlFor="addons.largerStorage" className="text-base cursor-pointer">
-                            <div className="flex grow items-center justify-between border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
-                                <input type="checkbox" className=" text-brand-purplish-blue rounded mr-5 size-5" id="addons.largerStorage"
-                                    {...register("addons.largerStorage")} 
-                                    />
-                                <div className="flex flex-col grow">
-                                    <h2 className="font-medium">Larger storage</h2>
-                                    <p className="m-0">Extra 1TB of cloud save</p>
-                                </div>
-                                <span className="text-right text-brand-purplish-blue">{getValues("billing") === "yearly" ? "+$20/yr" : "+$2/mo"}</span>
-                            </div>
-                        </label>
-                        
-                        <label htmlFor="addons.customizableProfile" className="text-base cursor-pointer">
-                            <div className="flex grow items-center justify-between border group hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia py-4 px-5 rounded-xl">
-                                <input type="checkbox" className=" text-brand-purplish-blue rounded mr-5 size-5" id="addons.customizableProfile"
-                                    {...register("addons.customizableProfile")} 
-                                    />
-                                <div className="flex flex-col grow">
-                                    <h2 className="font-medium">Customizable Profile</h2>
-                                    <p className="m-0">Custom theme on your profile</p>
-                                </div>
-                                <span className="text-right text-brand-purplish-blue">{getValues("billing") === "yearly" ? "+$20/yr" : "+$2/mo"}</span>
-                            </div>
-                        </label>
-                    </div>  
-
+                            </label>
+                        )) }
+                    </div>
                 </div> }
 
                 {/* <!-- Step 3 end -->
@@ -333,9 +321,31 @@ export default function Form({}: FormProps) {
                     <h1>Finishing up</h1>
                     <p>Double-check everything looks OK before confirming.</p>
 
-                    {/* <!-- Dynamically add subscription and add-on selections here --> */}
+                    <div className="flex flex-col px-7 py-5 bg-brand-magnolia rounded-xl">
+                        <div className="flex items-center pb-5 justify-between border-b">
+                            <div className="flex flex-col text-left">
+                                <h6 className="font-medium text-brand-marine-blue capitalize">
+                                    {getValues("plan")} ({getValues("billing")})
+                                </h6>
+                                <button className="w-min">
+                                    <p className="m-0 text-sm underline hover:no-underline">Change</p>
+                                </button>
+                            </div>
+                            <span className="font-bold text-brand-marine-blue">$9/mo</span> {/** TODO: make dynamic */}
+                        </div>
+                        {addons.map((addon) => (
+                            getValues(`addons.${addon.name}`) && <div className="flex justify-between mt-4">
+                                <p className="m-0 text-sm">{addon.title}</p>
+                                <span className="text-sm text-brand-marine-blue">{getValues("billing") === "yearly" ? addon.yearlyPrice : addon.monthlyPrice }</span>
+                            </div>
+                        ))}
+                    </div>
 
-                    <p>Total (per month/year)</p> {/** Dynamically change billing type */}
+                    <div className="flex justify-between items-center p-8">
+                        <p className="m-0">Total (per {getValues("billing") === "yearly" ? "year" : "month"}) </p>
+                        <span className="text-xl font-bold text-brand-purplish-blue">+12/mo</span> {/** TODO: make dynamic */}
+                    </div>
+
                 
                 </div> }
 
