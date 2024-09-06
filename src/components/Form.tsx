@@ -327,13 +327,13 @@ export default function Form({}: FormProps) {
                                 <h6 className="font-medium text-brand-marine-blue capitalize">
                                     {getValues("plan")} ({getValues("billing")})
                                 </h6>
-                                <button className="w-min">
+                                <button className="w-min" onClick={() => handleNav(2)}>
                                     <p className="m-0 text-sm underline hover:no-underline">Change</p>
                                 </button>
                             </div>
                             <span className="font-bold text-brand-marine-blue">$9/mo</span> {/** TODO: make dynamic */}
                         </div>
-                        {addons.map((addon) => (
+                        { addons.map((addon) => (
                             getValues(`addons.${addon.name}`) && <div className="flex justify-between mt-4">
                                 <p className="m-0 text-sm">{addon.title}</p>
                                 <span className="text-sm text-brand-marine-blue">{getValues("billing") === "yearly" ? addon.yearlyPrice : addon.monthlyPrice }</span>
