@@ -1,6 +1,4 @@
-type CompleteStepProps = {}
-
-export default function CompleteStep({}: CompleteStepProps) {
+export default function CompleteStep() {
   return (
     <div className="flex grow flex-col justify-center items-center">
 
