@@ -70,7 +70,7 @@ export default function Form({}: FormProps) {
             name: "",
             email: "",
             phone: "",
-            plan: undefined,
+            plan: "arcade",
             billing: "monthly",
             addons: {
                 customizableProfile: false,
@@ -266,7 +266,9 @@ export default function Form({}: FormProps) {
                         </button>
                     </div>
 
-                    { errors.plan && <span className=" text-sm text-center mt-3 font-bold text-brand-strawberry-red">{errors.plan.message}</span> }
+                    <div className="relative flex w-full h-2">
+                        { errors.plan && <span className="absolute right-0 left-0 text-sm text-center mt-3 font-bold text-brand-strawberry-red">{errors.plan.message}</span> }
+                    </div>
 
                     <div className="flex h-12 w-full my-10 bg-brand-magnolia justify-center items-center">
                         <Controller 
