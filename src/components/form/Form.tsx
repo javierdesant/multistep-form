@@ -2,27 +2,17 @@ import { useCallback, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import ToggleSwitch from "../ToggleSwitch.tsx"
 import { formDataSchema } from '../../lib/schema.ts'
 import { DevTool } from "@hookform/devtools";
 import CompleteStep from "./CompleteStep.tsx"
+import Step1 from "./Step1.tsx"
+import { Addon, Steps } from "../../types/form.types.ts"
 
 interface FormProps {}
 
 export type FormValues = z.infer<typeof formDataSchema>;
-
-type Step = {
-    id: `step-${number}`
-    name: string
-    fields: (keyof FormValues)[]
-}
-
-type Steps = [
-    { id: "complete", name: "Complete", fields: [] },
-    ...Step[]
-]
 
 const steps: Steps = [
     { id: "complete", name: "Complete", fields: [] },
@@ -31,15 +21,6 @@ const steps: Steps = [
     { id: "step-3", name: "Add-ons", fields: ["billing"] },
     { id: "step-4", name: "Summary", fields: ["addons"] },
 ]
-
-type Addon = {
-    name: keyof FormValues['addons']
-    title: string
-    description: string
-    price: number
-    monthlyPrice: `+${number}/mo`
-    yearlyPrice: `+${number}/yr`
-}
 
 const createAddon = (
     name: keyof FormValues['addons'],
@@ -55,7 +36,7 @@ const createAddon = (
     yearlyPrice: `+${price * 10}/yr`
 })
 
-export const addons: Addon[] = [
+const addons: Addon[] = [
     createAddon("onlineService", "Online service", "Access to multiplayer games", 1),
     createAddon("largerStorage", "Larger storage", "Extra 1TB of cloud save", 2),
     createAddon("customizableProfile", "Customizable profile", "Custom theme on your profile", 2),
@@ -175,54 +156,14 @@ export default function Form({}: FormProps) {
                 onError={() => onError}
                 noValidate
             >
+                
+                { currentStep === 1 && <Step1 
+                    errors={errors}
+                    register={register}
+                    control={control}
+                /> }
 
-                {/* <!-- Step 1 start --> */}
-
-                { currentStep === 1 && <div className="flex flex-col">
-
-                    <h1>Personal info</h1>
-                    <p>Please provide your name, email address, and phone number.</p>
-                    
-                    <div className="flex grow justify-between mb-2">
-                        <label htmlFor="name">Name</label>
-                        { errors.name && <span className=" text-sm font-bold text-brand-strawberry-red">{errors.name.message}</span> }
-                    </div>
-                    <input type="text" id="name" placeholder="e.g. Stephen King" 
-                        className={errors.name && "border-brand-strawberry-red" }
-                        {...register("name")}
-                    />
-                    
-                    <div className="flex grow justify-between mt-5 mb-2">
-                        <label htmlFor="email">Email Address</label>
-                        { errors.email && <span className=" text-sm font-bold text-brand-strawberry-red">{errors.email.message}</span> }
-                    </div>
-                    <input type="email" id="email" placeholder="e.g. stephenking@lorem.com" 
-                        className={errors.email && "border-brand-strawberry-red" }
-                        {...register("email")}
-                    />
-
-                    <div className="flex grow justify-between mt-5 mb-2">
-                        <label htmlFor="phone">Phone Number</label>
-                        { errors.phone && <span className="text-sm font-bold text-brand-strawberry-red">{errors.phone.message}</span> }
-                    </div>
-                    <Controller
-                        control={control}
-                        name="phone"
-                        render={({ field: { onChange, value } }) => (
-                            <PhoneInput
-                            className={`phone-input ${errors.phone && "*:border-brand-strawberry-red" }`}
-                            value={value}
-                            onChange={onChange}
-                            defaultCountry="US"
-                            placeholder="e.g. +1 234 567 890"
-                            />
-                        )}
-                    />
-                </div> }
-
-                {/* <!-- Step 1 end -->
-
-                <!-- Step 2 start --> */}
+                {/* <!-- Step 2 start --> */}
 
                 { currentStep === 2 && <div className="flex flex-col">
 
