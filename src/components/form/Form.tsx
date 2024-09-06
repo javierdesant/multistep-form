@@ -9,8 +9,6 @@ import Step2 from "./Step2.tsx"
 import Step3 from "./Step3.tsx"
 import Step4 from "./Step4.tsx"
 
-interface FormProps {}
-
 const steps: Steps = [
     { id: "complete", name: "Complete", fields: [] },
     { id: "step-1", name: "Your info", fields: ["name", "email", "phone"] },
@@ -22,7 +20,7 @@ const steps: Steps = [
 const LAST_STEP = steps.length - 1;
 const COMPLETE_STEP = 0;
  
-export default function Form({}: FormProps) {
+export default function Form() {
 
     const [currentStep, setCurrentStep] = useState(1)
 
