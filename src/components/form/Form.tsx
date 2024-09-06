@@ -7,6 +7,7 @@ import 'react-phone-number-input/style.css'
 import ToggleSwitch from "../ToggleSwitch.tsx"
 import { formDataSchema } from '../../lib/schema.ts'
 import { DevTool } from "@hookform/devtools";
+import CompleteStep from "./CompleteStep.tsx"
 
 interface FormProps {}
 
@@ -387,17 +388,7 @@ export default function Form({}: FormProps) {
 
                 <!-- Step 5 start --> */}
 
-                { currentStep === COMPLETE_STEP && <div className="flex grow flex-col justify-center items-center">
-
-                    <img src="/img/icon-thank-you.svg" alt="thank-you-icon" className="w-20" />
-                    <h1>Thank you!</h1>
-                    <p className="text-center text-pretty text-lg tracking-wide mt-3 mx-3">
-                        Thanks for confirming your subscription! We hope you have fun 
-                        using our platform. If you ever need support, please feel free 
-                        to email us at support@loremgaming.com.
-                    </p>
-
-                </div> }
+                { currentStep === COMPLETE_STEP && <CompleteStep /> }
 
                 {/* <!-- Step 5 end --> 
 
