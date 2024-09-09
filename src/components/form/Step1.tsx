@@ -12,8 +12,8 @@ export default function Step1() {
 
   return (
     <div className="flex flex-col">
-      <h1>Personal info</h1>
-      <p>Please provide your name, email address, and phone number.</p>
+      <h1 className="my-4 md:mt-8">Personal info</h1>
+      <p className="mb-5 md:mb-10">Please provide your name, email address, and phone number.</p>
 
       <div className="mb-2 flex grow justify-between">
         <label htmlFor="name">Name</label>

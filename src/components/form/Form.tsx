@@ -76,83 +76,107 @@ export default function Form() {
   };
 
   return (
-    <div className="flex w-full rounded-2xl bg-white p-4 shadow-xl md:h-full md:max-h-[600px] md:max-w-[1050px]">
-      <div className="flex min-h-[568px] w-[274px] shrink-0 flex-col rounded-xl bg-sidebar-desktop p-5 pt-7">
-        {steps.map(
-          (step, index) =>
-            index !== COMPLETE_STEP && (
-              <div className="my-3 ml-2 flex items-center" key={step.id}>
-                <button
-                  id={step.id}
-                  disabled={
-                    `step-${currentStep}` === step.id ||
-                    currentStep === COMPLETE_STEP
-                  }
-                  className={`h-8 w-8 rounded-full border text-sm font-bold ${currentStep === index ? "bg-brand-pastel-blue text-brand-marine-blue" : "text-brand-alabaster"}`}
-                  onClick={() => handleNav(index)}
-                >
-                  {index}
-                </button>
-                <div className="ml-5 flex flex-col items-baseline uppercase">
-                  <span className="text-xs text-brand-light-gray">
-                    Step {index}
-                  </span>
-                  <span className="font-bold tracking-wider text-brand-alabaster">
-                    {step.name}
-                  </span>
+    <>
+        <div className="fixed flex w-full h-full top-0 bg-sidebar-mobile bg-no-repeat bg-contain bg-top p-5 pt-7 md:hidden" />
+        <div className="flex md:hidden my-5 space-x-4">
+            {steps.map(
+                (step, index) =>
+                    index !== COMPLETE_STEP && (
+                        <div className="z-20 my-3 ml-2 flex items-center" key={step.id}>
+                    <button
+                    id={step.id}
+                    disabled={
+                        `step-${currentStep}` === step.id ||
+                        currentStep === COMPLETE_STEP
+                    }
+                    className={`size-9 rounded-full border font-bold ${currentStep === index ? "bg-brand-pastel-blue text-brand-marine-blue" : "text-brand-alabaster"}`}
+                    onClick={() => handleNav(index)}
+                    >
+                    {index}
+                    </button>
                 </div>
-              </div>
-            ),
-        )}
-      </div>
+                ),
+            )}
+        </div>
 
-      <FormProvider {...methods}>
-        <form
-          className="flex grow flex-col px-24"
-          onSubmit={methods.handleSubmit(onSubmit)}
-          onError={() => onError}
-          noValidate
-        >
-          {currentStep === 1 && <Step1 />}
-          {currentStep === 2 && <Step2 />}
-          {currentStep === 3 && <Step3 />}
-          {currentStep === 4 && <Step4 handleNav={handleNav} />}
+        <div className="flex z-10 w-full max-w-[350px] rounded-xl md:rounded-2xl bg-white p-4 shadow-xl md:h-full md:max-h-[600px] md:max-w-[1050px]">
+            <div className="hidden md:flex w-[274px] flex-col rounded-xl bg-sidebar-desktop bg-no-repeat bg-cover bg-bottom p-5 pt-7 md:visible">
+                {steps.map(
+                (step, index) =>
+                    index !== COMPLETE_STEP && (
+                    <div className="my-3 ml-2 flex items-center" key={step.id}>
+                        <button
+                        id={step.id}
+                        disabled={
+                            `step-${currentStep}` === step.id ||
+                            currentStep === COMPLETE_STEP
+                        }
+                        className={`h-8 w-8 rounded-full border text-sm font-bold ${currentStep === index ? "bg-brand-pastel-blue text-brand-marine-blue" : "text-brand-alabaster"}`}
+                        onClick={() => handleNav(index)}
+                        >
+                        {index}
+                        </button>
+                        <div className="ml-5 flex flex-col items-baseline uppercase">
+                        <span className="text-xs text-brand-light-gray">
+                            Step {index}
+                        </span>
+                        <span className="font-bold tracking-wider text-brand-alabaster">
+                            {step.name}
+                        </span>
+                        </div>
+                    </div>
+                    ),
+                )}
+            </div>
 
-          {currentStep === COMPLETE_STEP && <CompleteStep />}
+            <FormProvider {...methods}>
+                <form
+                className="flex grow flex-col px-4 md:px-24"
+                onSubmit={methods.handleSubmit(onSubmit)}
+                onError={() => onError}
+                noValidate
+                >
+                {currentStep === 1 && <Step1 />}
+                {currentStep === 2 && <Step2 />}
+                {currentStep === 3 && <Step3 />}
+                {currentStep === 4 && <Step4 handleNav={handleNav} />}
 
-          <div className="mb-4 mt-auto flex justify-between">
-            <button
-              disabled={currentStep === 1 || currentStep === COMPLETE_STEP}
-              type="button"
-              className="my-3 flex w-min text-nowrap font-medium text-brand-cool-gray hover:text-brand-marine-blue disabled:invisible"
-              onClick={() => {
-                handleNav(currentStep - 1);
-              }}
-            >
-              Go Back
-            </button>
-            <button
-              disabled={
-                currentStep === LAST_STEP || currentStep === COMPLETE_STEP
-              }
-              type="button"
-              className="flex w-min text-nowrap rounded-lg bg-brand-marine-blue px-6 py-3 font-medium text-brand-magnolia hover:bg-blue-900 disabled:hidden"
-              onClick={() => {
-                handleNav(currentStep + 1);
-              }}
-            >
-              Next Step
-            </button>
-            <button
-              disabled={currentStep !== LAST_STEP}
-              type="submit"
-              className="flex w-min text-nowrap rounded-lg bg-brand-purplish-blue px-7 py-3 font-medium text-brand-magnolia hover:opacity-70 disabled:hidden"
-            >
-              Confirm
-            </button>
-          </div>
-        </form>
-      </FormProvider>
-    </div>
+                {currentStep === COMPLETE_STEP && <CompleteStep />}
+
+                <div className="fixed bottom-0 left-0 right-0 w-full p-5 md:static bg-white md:mb-4 md:p-0 md:mt-auto flex justify-between">
+                    <button
+                    disabled={currentStep === 1 || currentStep === COMPLETE_STEP}
+                    type="button"
+                    className="my-3 flex w-min text-nowrap font-medium text-brand-cool-gray hover:text-brand-marine-blue disabled:invisible"
+                    onClick={() => {
+                        handleNav(currentStep - 1);
+                    }}
+                    >
+                    Go Back
+                    </button>
+                    <button
+                    disabled={
+                        currentStep === LAST_STEP || currentStep === COMPLETE_STEP
+                    }
+                    type="button"
+                    className="flex w-min text-nowrap rounded-md md:rounded-lg bg-brand-marine-blue px-6 py-3 font-medium text-brand-magnolia hover:bg-blue-900 disabled:hidden"
+                    onClick={() => {
+                        handleNav(currentStep + 1);
+                    }}
+                    >
+                    Next Step
+                    </button>
+                    <button
+                    disabled={currentStep !== LAST_STEP}
+                    type="submit"
+                    className="flex w-min text-nowrap rounded-md md:rounded-lg bg-brand-purplish-blue px-7 py-3 font-medium text-brand-magnolia hover:opacity-70 disabled:hidden"
+                    >
+                    Confirm
+                    </button>
+                </div>
+                </form>
+            </FormProvider>
+        </div>
+    </>
   );
 }

@@ -8,11 +8,11 @@
   }
 
   h1 {
-    @apply mb-4 mt-8 text-4xl font-bold text-brand-marine-blue;
+    @apply text-2xl md:text-3xl font-bold text-brand-marine-blue;
   }
 
   p {
-    @apply mb-10 text-brand-cool-gray;
+    @apply text-brand-cool-gray;
   }
 
   label {
@@ -33,7 +33,7 @@
   [type="week"],
   [multiple],
   select {
-    @apply block rounded-lg border-brand-light-gray px-4 py-3 font-medium text-brand-marine-blue placeholder:opacity-70 focus:border-brand-purplish-blue focus:ring-brand-purplish-blue;
+    @apply block rounded-md md:rounded-lg border-brand-light-gray px-4 py-3 font-medium text-brand-marine-blue placeholder:opacity-70 focus:border-brand-purplish-blue focus:ring-brand-purplish-blue;
   }
 }
 

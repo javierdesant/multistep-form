@@ -11,8 +11,8 @@ export default function Step4({ handleNav }: Step4Props) {
 
   return (
     <div>
-      <h1>Finishing up</h1>
-      <p>Double-check everything looks OK before confirming.</p>
+      <h1 className="my-4 md:mt-8">Finishing up</h1>
+      <p className="mb-5 md:mb-10">Double-check everything looks OK before confirming.</p>
 
       <div className="flex flex-col rounded-xl bg-brand-magnolia px-7 py-5">
         <div className="flex items-center justify-between border-b pb-5">
@@ -21,20 +21,20 @@ export default function Step4({ handleNav }: Step4Props) {
               {getValues("plan")} ({getValues("billing")})
             </h6>
             <button className="w-min" onClick={() => handleNav(2)}>
-              <p className="m-0 text-sm underline hover:no-underline">Change</p>
+              <p className="text-sm underline hover:no-underline">Change</p>
             </button>
           </div>
           <span className="font-bold text-brand-marine-blue">$9/mo</span>{" "}
           {/** TODO: make dynamic */}
         </div>
         {addons.every((addon) => !getValues(`addons.${addon.name}`)) ? (
-          <p className="m-0 mt-4 text-sm">No addons selected</p>
+          <p className="mt-4 text-sm">No addons selected</p>
         ) : (
           addons.map(
             (addon) =>
               getValues(`addons.${addon.name}`) && (
                 <div className="mt-4 flex justify-between" key={addon.name}>
-                  <p className="m-0 text-sm">{addon.title}</p>
+                  <p className="text-sm">{addon.title}</p>
                   <span className="text-sm text-brand-marine-blue">
                     {getValues("billing") === "yearly"
                       ? addon.yearlyPrice
@@ -47,7 +47,7 @@ export default function Step4({ handleNav }: Step4Props) {
       </div>
 
       <div className="flex items-center justify-between p-8">
-        <p className="m-0">
+        <p>
           Total (per {getValues("billing") === "yearly" ? "year" : "month"}){" "}
         </p>
         <span className="text-xl font-bold text-brand-purplish-blue">
