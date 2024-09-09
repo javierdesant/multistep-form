@@ -12,7 +12,9 @@ export default function Step4({ handleNav }: Step4Props) {
   return (
     <div>
       <h1 className="my-4 md:mt-8">Finishing up</h1>
-      <p className="mb-5 md:mb-10">Double-check everything looks OK before confirming.</p>
+      <p className="mb-5 md:mb-10">
+        Double-check everything looks OK before confirming.
+      </p>
 
       <div className="flex flex-col rounded-xl bg-brand-magnolia px-7 py-5">
         <div className="flex items-center justify-between border-b pb-5">

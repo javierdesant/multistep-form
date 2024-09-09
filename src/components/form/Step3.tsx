@@ -37,7 +37,9 @@ export default function Step3() {
   return (
     <div className="flex flex-col">
       <h1 className="my-4 md:mt-8">Pick add-ons</h1>
-      <p className="mb-5 md:mb-10">Add-ons help enhance your gaming experience.</p>
+      <p className="mb-5 md:mb-10">
+        Add-ons help enhance your gaming experience.
+      </p>
 
       <div className="grid grid-cols-1 grid-rows-3 gap-5">
         {addons.map((addon) => (
@@ -57,7 +59,7 @@ export default function Step3() {
                 <p>{addon.description}</p>
               </div>
               <span className="text-right text-brand-purplish-blue">
-                {getValues('billing') === 'yearly'
+                {getValues("billing") === "yearly"
                   ? addon.yearlyPrice
                   : addon.monthlyPrice}
               </span>

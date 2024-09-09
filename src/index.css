@@ -8,7 +8,7 @@
   }
 
   h1 {
-    @apply text-2xl md:text-3xl font-bold text-brand-marine-blue;
+    @apply text-2xl font-bold text-brand-marine-blue md:text-3xl;
   }
 
   p {
@@ -33,7 +33,7 @@
   [type="week"],
   [multiple],
   select {
-    @apply block rounded-md md:rounded-lg border-brand-light-gray px-4 py-3 font-medium text-brand-marine-blue placeholder:opacity-70 focus:border-brand-purplish-blue focus:ring-brand-purplish-blue;
+    @apply block rounded-md border-brand-light-gray px-4 py-3 font-medium text-brand-marine-blue placeholder:opacity-70 focus:border-brand-purplish-blue focus:ring-brand-purplish-blue md:rounded-lg;
   }
 }
 
