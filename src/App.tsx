@@ -6,7 +6,7 @@ function App() {
       <div className="flex h-screen w-screen grow flex-col items-center md:justify-center">
         <Form />
 
-        <div className="attribution m-5">
+        <div className="attribution m-2">
           Challenge by{" "}
           <a
             href="https://www.frontendmentor.io?ref=challenge"
