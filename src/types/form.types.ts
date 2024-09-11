@@ -16,8 +16,8 @@ type Addon = {
   title: string;
   description: string;
   price: number;
-  monthlyPrice: `+${number}/mo`;
-  yearlyPrice: `+${number}/yr`;
+  monthlyPrice: `+${string}/mo`;
+  yearlyPrice: `+${string}/yr`;
 };
 
 export { type Steps, type Addon };

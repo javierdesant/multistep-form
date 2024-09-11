@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import FormValues, { Addon } from "../../types/form.types";
+import { formatCurrency } from "../../helpers";
 
 const createAddon = (
   name: keyof FormValues["addons"],
@@ -11,8 +12,8 @@ const createAddon = (
   title,
   description,
   price,
-  monthlyPrice: `+${price}/mo`,
-  yearlyPrice: `+${price * 10}/yr`,
+  monthlyPrice: `+${formatCurrency(price)}/mo`,
+  yearlyPrice: `+${formatCurrency(price * 10)}/yr`,
 });
 
 export const addons: Addon[] = [
