@@ -12,7 +12,7 @@ export default function Step1() {
 
   return (
     <div className="flex flex-col">
-      <h1 className="my-4 md:mt-8">Personal info</h1>
+      <h1 className="my-3 md:mt-8">Personal info</h1>
       <p className="mb-5 md:mb-10">
         Please provide your name, email address, and phone number.
       </p>
@@ -20,7 +20,7 @@ export default function Step1() {
       <div className="mb-2 flex grow justify-between">
         <label htmlFor="name">Name</label>
         {errors.name && (
-          <span className="text-sm font-bold text-brand-strawberry-red">
+          <span className="text-xs md:text-sm font-bold text-brand-strawberry-red">
             {errors.name.message}
           </span>
         )}
@@ -36,7 +36,7 @@ export default function Step1() {
       <div className="mb-2 mt-5 flex grow justify-between">
         <label htmlFor="email">Email Address</label>
         {errors.email && (
-          <span className="text-sm font-bold text-brand-strawberry-red">
+          <span className="text-xs md:text-sm font-bold text-brand-strawberry-red">
             {errors.email.message}
           </span>
         )}
@@ -52,7 +52,7 @@ export default function Step1() {
       <div className="mb-2 mt-5 flex grow justify-between">
         <label htmlFor="phone">Phone Number</label>
         {errors.phone && (
-          <span className="text-sm font-bold text-brand-strawberry-red">
+          <span className="text-xs md:text-sm font-bold text-brand-strawberry-red">
             {errors.phone.message}
           </span>
         )}

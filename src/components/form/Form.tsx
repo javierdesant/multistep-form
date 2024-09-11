@@ -100,7 +100,7 @@ export default function Form() {
       </div>
 
       <div className="z-10 flex w-full max-w-[350px] rounded-xl bg-white p-4 shadow-xl md:h-full md:max-h-[600px] md:max-w-[1050px] md:rounded-2xl">
-        <div className="hidden w-[274px] flex-col rounded-xl bg-sidebar-desktop bg-cover bg-bottom bg-no-repeat p-5 pt-7 md:visible md:flex">
+        <div className="hidden min-w-[274px] flex-col rounded-xl bg-sidebar-desktop bg-cover bg-bottom bg-no-repeat p-5 pt-7 md:visible md:flex">
           {steps.map(
             (step, index) =>
               index !== COMPLETE_STEP && (
@@ -111,7 +111,7 @@ export default function Form() {
                       `step-${currentStep}` === step.id ||
                       currentStep === COMPLETE_STEP
                     }
-                    className={`h-8 w-8 rounded-full border text-sm font-bold ${currentStep === index ? "bg-brand-pastel-blue text-brand-marine-blue" : "text-brand-alabaster"}`}
+                    className={`size-8 rounded-full border text-sm font-bold ${currentStep === index ? "bg-brand-pastel-blue text-brand-marine-blue" : "text-brand-alabaster"}`}
                     onClick={() => handleNav(index)}
                   >
                     {index}
@@ -143,7 +143,7 @@ export default function Form() {
 
             {currentStep === COMPLETE_STEP && <CompleteStep />}
 
-            <div className="fixed bottom-0 left-0 right-0 flex w-full justify-between bg-white p-5 md:static md:mb-4 md:mt-auto md:p-0">
+            <div className="fixed bottom-0 left-0 right-0 flex w-full justify-between bg-white px-5 py-3 md:static md:mb-4 md:mt-auto md:p-0">
               <button
                 disabled={currentStep === 1 || currentStep === COMPLETE_STEP}
                 type="button"

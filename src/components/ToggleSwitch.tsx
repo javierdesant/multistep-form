@@ -32,7 +32,7 @@ export default function ToggleSwitch({
           className="peer sr-only"
           onChange={(e) => onChange(e.target.checked ? "yearly" : "monthly")}
         />
-        <div className="peer relative mx-6 h-6 w-12 rounded-full bg-brand-marine-blue after:absolute after:start-[6px] after:top-[4px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all peer-checked:after:translate-x-[20px] peer-checked:after:border-white peer-focus:outline-none peer-focus:outline-brand-purplish-blue peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-[24px] dark:bg-brand-marine-blue" />
+        <div className="peer relative mx-6 w-10 h-5 md:h-6 md:w-12 rounded-full bg-brand-marine-blue after:absolute after:start-[6px] after:top-[4px] after:h-3 after:w-3 md:after:h-4 md:after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all md:peer-checked:after:translate-x-[20px] peer-checked:after:translate-x-[17px] peer-checked:after:border-white peer-focus:outline-none peer-focus:outline-brand-purplish-blue peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-[24px] dark:bg-brand-marine-blue" />
       </label>
       <button
         id="checker2"

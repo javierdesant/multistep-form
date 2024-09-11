@@ -36,29 +36,30 @@ export default function Step3() {
 
   return (
     <div className="flex flex-col">
-      <h1 className="my-4 md:mt-8">Pick add-ons</h1>
+      <h1 className="my-3 md:mt-8">Pick add-ons</h1>
       <p className="mb-5 md:mb-10">
         Add-ons help enhance your gaming experience.
       </p>
 
-      <div className="grid grid-cols-1 grid-rows-3 gap-5">
+      <div className="grid grid-cols-1 grid-rows-3 gap-3 md:gap-5 mb-4">
         {addons.map((addon) => (
           <label
             htmlFor={`addons.${addon.name}`}
             className="cursor-pointer text-base"
+            key={addon.name}
           >
-            <div className="group flex grow items-center justify-between rounded-xl border px-5 py-4 hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia">
+            <div className="group flex grow h-full items-center justify-between rounded-xl border px-4 py-3 md:px-5 md:py-4 hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia">
               <input
                 type="checkbox"
-                className="mr-5 size-5 rounded text-brand-purplish-blue"
+                className="mr-3 md:mr-5 size-5 rounded text-brand-purplish-blue"
                 id={`addons.${addon.name}`}
                 {...register(`addons.${addon.name}`)}
               />
               <div className="flex grow flex-col">
                 <h2 className="font-medium">{addon.title}</h2>
-                <p>{addon.description}</p>
+                <p className="text-xs md:text-base">{addon.description}</p>
               </div>
-              <span className="text-right text-brand-purplish-blue">
+              <span className="text-nowrap text-right md:text-base text-sm text-brand-purplish-blue">
                 {getValues("billing") === "yearly"
                   ? addon.yearlyPrice
                   : addon.monthlyPrice}

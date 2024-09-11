@@ -8,15 +8,27 @@
   }
 
   h1 {
-    @apply text-2xl font-bold text-brand-marine-blue md:text-3xl;
+    @apply text-xl font-bold text-brand-marine-blue md:text-3xl;
+  }
+
+  h2 {
+    @apply md:text-lg text-brand-marine-blue font-medium;
+  }
+
+  h3 {
+    @apply md:text-lg font-medium text-brand-marine-blue
+  }
+
+  h6 {
+    @apply text-sm md:text-base font-medium text-brand-marine-blue
   }
 
   p {
-    @apply text-brand-cool-gray;
+    @apply text-sm md:text-base text-brand-cool-gray;
   }
 
   label {
-    @apply text-sm text-brand-marine-blue;
+    @apply text-xs md:text-sm text-brand-marine-blue;
   }
 
   [type="text"],
@@ -33,7 +45,7 @@
   [type="week"],
   [multiple],
   select {
-    @apply block rounded-md border-brand-light-gray px-4 py-3 font-medium text-brand-marine-blue placeholder:opacity-70 focus:border-brand-purplish-blue focus:ring-brand-purplish-blue md:rounded-lg;
+    @apply block rounded-md border-brand-light-gray px-4 py-3 font-medium text-brand-marine-blue placeholder:opacity-70 focus:border-brand-purplish-blue focus:ring-brand-purplish-blue text-sm md:text-base md:rounded-lg;
   }
 }
 
