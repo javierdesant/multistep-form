@@ -4,36 +4,48 @@
 
 @layer base {
   body {
-    font-family: 'Ubuntu', sans-serif;
+    font-family: "Ubuntu", sans-serif;
   }
 
   h1 {
-    @apply text-4xl font-bold text-brand-marine-blue mb-4 mt-8
+    @apply text-xl font-bold text-brand-marine-blue md:text-3xl;
+  }
+
+  h2 {
+    @apply font-medium text-brand-marine-blue md:text-lg;
+  }
+
+  h3 {
+    @apply font-medium text-brand-marine-blue md:text-lg;
+  }
+
+  h6 {
+    @apply text-sm font-medium text-brand-marine-blue md:text-base;
   }
 
   p {
-    @apply text-brand-cool-gray mb-10
+    @apply text-sm text-brand-cool-gray md:text-base;
   }
 
   label {
-    @apply text-sm text-brand-marine-blue
+    @apply text-xs text-brand-marine-blue md:text-sm;
   }
 
-  [type='text'],
-  [type='email'],
-  [type='url'],
-  [type='password'],
-  [type='number'],
-  [type='date'],
-  [type='datetime-local'],
-  [type='month'],
-  [type='search'],
-  [type='tel'],
-  [type='time'],
-  [type='week'],
+  [type="text"],
+  [type="email"],
+  [type="url"],
+  [type="password"],
+  [type="number"],
+  [type="date"],
+  [type="datetime-local"],
+  [type="month"],
+  [type="search"],
+  [type="tel"],
+  [type="time"],
+  [type="week"],
   [multiple],
   select {
-    @apply block border-brand-light-gray text-brand-marine-blue focus:ring-brand-purplish-blue focus:border-brand-purplish-blue font-medium placeholder:opacity-70 rounded-lg py-3 px-4
+    @apply block rounded-md border-brand-light-gray px-4 py-3 text-sm font-medium text-brand-marine-blue placeholder:opacity-70 focus:border-brand-purplish-blue focus:ring-brand-purplish-blue md:rounded-lg md:text-base;
   }
 }
 
@@ -41,6 +53,8 @@
   .attribution {
     font-size: 11px;
     text-align: center;
-    a { color: hsl(228, 45%, 44%); }
+    a {
+      color: hsl(228, 45%, 44%);
+    }
   }
 }
