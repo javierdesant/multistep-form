@@ -4,9 +4,7 @@ import FormValues from "../../types/form.types";
 
 export default function Step2() {
   const {
-    formState: { errors },
     watch,
-    reset,
     getValues,
     setValue,
     control,
@@ -15,15 +13,7 @@ export default function Step2() {
   let currentPlan = watch("plan");
 
   const handleTogglePlan = (plan: FormValues["plan"]) => {
-    if (currentPlan === plan) {
-      reset(
-        {
-          ...getValues(),
-          plan: undefined,
-        },
-        { keepDirty: true, keepTouched: true },
-      );
-    } else {
+    if (currentPlan !== plan) {
       setValue("plan", plan, { shouldValidate: true });
     }
   };
@@ -39,11 +29,9 @@ export default function Step2() {
         <button
           type="button"
           className={`flex items-center rounded-lg p-3 ring-1 hover:ring-brand-purplish-blue focus:outline-none focus:outline-brand-purplish-blue md:h-52 md:flex-col md:items-baseline md:justify-between md:rounded-xl md:p-5 ${
-            errors.plan
-              ? "ring-1 ring-brand-strawberry-red"
-              : watch("plan") === "arcade"
-                ? "bg-brand-magnolia ring-brand-purplish-blue"
-                : "ring-brand-light-gray"
+            watch("plan") === "arcade"
+              ? "bg-brand-magnolia ring-brand-purplish-blue"
+              : "ring-brand-light-gray"
           }`}
           onClick={() => handleTogglePlan("arcade")}
         >
@@ -68,11 +56,9 @@ export default function Step2() {
         <button
           type="button"
           className={`group flex items-center rounded-lg p-3 ring-1 hover:ring-brand-purplish-blue focus:outline-none focus:outline-brand-purplish-blue md:h-52 md:flex-col md:items-baseline md:justify-between md:rounded-xl md:p-5 ${
-            errors.plan
-              ? "ring-1 ring-brand-strawberry-red"
-              : watch("plan") === "advanced"
-                ? "bg-brand-magnolia ring-brand-purplish-blue"
-                : "ring-brand-light-gray"
+            watch("plan") === "advanced"
+              ? "bg-brand-magnolia ring-brand-purplish-blue"
+              : "ring-brand-light-gray"
           }`}
           onClick={() => handleTogglePlan("advanced")}
         >
@@ -97,11 +83,9 @@ export default function Step2() {
         <button
           type="button"
           className={`flex items-center rounded-lg p-3 ring-1 hover:ring-brand-purplish-blue focus:outline-none focus:outline-brand-purplish-blue md:h-52 md:flex-col md:items-baseline md:justify-between md:rounded-xl md:p-5 ${
-            errors.plan
-              ? "ring-1 ring-brand-strawberry-red"
-              : watch("plan") === "pro"
-                ? "bg-brand-magnolia ring-brand-purplish-blue"
-                : "ring-brand-light-gray"
+            watch("plan") === "pro"
+              ? "bg-brand-magnolia ring-brand-purplish-blue"
+              : "ring-brand-light-gray"
           }`}
           onClick={() => handleTogglePlan("pro")}
         >
@@ -122,14 +106,6 @@ export default function Step2() {
             )}
           </div>
         </button>
-      </div>
-
-      <div className="relative flex h-2 w-full">
-        {errors.plan && (
-          <span className="absolute left-0 right-0 mt-3 text-center text-sm font-bold text-brand-strawberry-red">
-            {errors.plan.message}
-          </span>
-        )}
       </div>
 
       <div className="my-3 flex h-12 w-full items-center justify-center bg-brand-magnolia md:my-10">

@@ -13,9 +13,7 @@ export const formDataSchema = z.object({
     .refine((value) => isValidPhoneNumber(value), {
       message: "Please enter a valid phone number",
     }),
-  plan: z.enum(["arcade", "advanced", "pro"], {
-    message: "Please select a plan",
-  }),
+  plan: z.enum(["arcade", "advanced", "pro"]),
   billing: z.enum(["monthly", "yearly"]),
   addons: z.object({
     onlineService: z.boolean(),
