@@ -41,17 +41,17 @@ export default function Step3() {
         Add-ons help enhance your gaming experience.
       </p>
 
-      <div className="grid grid-cols-1 grid-rows-3 gap-3 md:gap-5 mb-4">
+      <div className="mb-4 grid grid-cols-1 grid-rows-3 gap-3 md:gap-5">
         {addons.map((addon) => (
           <label
             htmlFor={`addons.${addon.name}`}
             className="cursor-pointer text-base"
             key={addon.name}
           >
-            <div className="group flex grow h-full items-center justify-between rounded-xl border px-4 py-3 md:px-5 md:py-4 hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia">
+            <div className="group flex h-full grow items-center justify-between rounded-xl border px-4 py-3 hover:border-brand-purplish-blue has-[:checked]:border-brand-purplish-blue has-[:checked]:bg-brand-magnolia md:px-5 md:py-4">
               <input
                 type="checkbox"
-                className="mr-3 md:mr-5 size-5 rounded text-brand-purplish-blue"
+                className="mr-3 size-5 rounded text-brand-purplish-blue md:mr-5"
                 id={`addons.${addon.name}`}
                 {...register(`addons.${addon.name}`)}
               />
@@ -59,7 +59,7 @@ export default function Step3() {
                 <h2 className="font-medium">{addon.title}</h2>
                 <p className="text-xs md:text-base">{addon.description}</p>
               </div>
-              <span className="text-nowrap text-right md:text-base text-sm text-brand-purplish-blue">
+              <span className="text-nowrap text-right text-sm text-brand-purplish-blue md:text-base">
                 {getValues("billing") === "yearly"
                   ? addon.yearlyPrice
                   : addon.monthlyPrice}

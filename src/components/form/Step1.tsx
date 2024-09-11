@@ -20,7 +20,7 @@ export default function Step1() {
       <div className="mb-2 flex grow justify-between">
         <label htmlFor="name">Name</label>
         {errors.name && (
-          <span className="text-xs md:text-sm font-bold text-brand-strawberry-red">
+          <span className="text-xs font-bold text-brand-strawberry-red md:text-sm">
             {errors.name.message}
           </span>
         )}
@@ -36,7 +36,7 @@ export default function Step1() {
       <div className="mb-2 mt-5 flex grow justify-between">
         <label htmlFor="email">Email Address</label>
         {errors.email && (
-          <span className="text-xs md:text-sm font-bold text-brand-strawberry-red">
+          <span className="text-xs font-bold text-brand-strawberry-red md:text-sm">
             {errors.email.message}
           </span>
         )}
@@ -52,7 +52,7 @@ export default function Step1() {
       <div className="mb-2 mt-5 flex grow justify-between">
         <label htmlFor="phone">Phone Number</label>
         {errors.phone && (
-          <span className="text-xs md:text-sm font-bold text-brand-strawberry-red">
+          <span className="text-xs font-bold text-brand-strawberry-red md:text-sm">
             {errors.phone.message}
           </span>
         )}

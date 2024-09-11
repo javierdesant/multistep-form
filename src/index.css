@@ -12,23 +12,23 @@
   }
 
   h2 {
-    @apply md:text-lg text-brand-marine-blue font-medium;
+    @apply font-medium text-brand-marine-blue md:text-lg;
   }
 
   h3 {
-    @apply md:text-lg font-medium text-brand-marine-blue
+    @apply font-medium text-brand-marine-blue md:text-lg;
   }
 
   h6 {
-    @apply text-sm md:text-base font-medium text-brand-marine-blue
+    @apply text-sm font-medium text-brand-marine-blue md:text-base;
   }
 
   p {
-    @apply text-sm md:text-base text-brand-cool-gray;
+    @apply text-sm text-brand-cool-gray md:text-base;
   }
 
   label {
-    @apply text-xs md:text-sm text-brand-marine-blue;
+    @apply text-xs text-brand-marine-blue md:text-sm;
   }
 
   [type="text"],
@@ -45,7 +45,7 @@
   [type="week"],
   [multiple],
   select {
-    @apply block rounded-md border-brand-light-gray px-4 py-3 font-medium text-brand-marine-blue placeholder:opacity-70 focus:border-brand-purplish-blue focus:ring-brand-purplish-blue text-sm md:text-base md:rounded-lg;
+    @apply block rounded-md border-brand-light-gray px-4 py-3 text-sm font-medium text-brand-marine-blue placeholder:opacity-70 focus:border-brand-purplish-blue focus:ring-brand-purplish-blue md:rounded-lg md:text-base;
   }
 }
 

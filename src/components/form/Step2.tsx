@@ -38,7 +38,7 @@ export default function Step2() {
       <div className="grid grid-cols-1 grid-rows-3 gap-5 md:grid-cols-3 md:grid-rows-1">
         <button
           type="button"
-          className={`flex rounded-lg md:rounded-xl p-3 md:p-5 ring-1 hover:ring-brand-purplish-blue focus:outline-none focus:outline-brand-purplish-blue md:h-52 md:flex-col items-center md:items-baseline md:justify-between ${
+          className={`flex items-center rounded-lg p-3 ring-1 hover:ring-brand-purplish-blue focus:outline-none focus:outline-brand-purplish-blue md:h-52 md:flex-col md:items-baseline md:justify-between md:rounded-xl md:p-5 ${
             errors.plan
               ? "ring-1 ring-brand-strawberry-red"
               : watch("plan") === "arcade"
@@ -50,17 +50,15 @@ export default function Step2() {
           <img
             src="/img/icon-arcade.svg"
             alt="arcade-icon"
-            className={`${watch('billing') === 'yearly' && "place-self-start"} h-10 md:h-14 md:place-self-start`}
+            className={`${watch("billing") === "yearly" && "place-self-start"} h-10 md:h-14 md:place-self-start`}
           />
           <div className="ml-5 flex flex-col md:m-0">
-            <h3 className="text-left">
-              Arcade
-            </h3>
-            <p className="text-left text-nowrap text-sm md:text-base">
+            <h3 className="text-left">Arcade</h3>
+            <p className="text-nowrap text-left text-sm md:text-base">
               {getValues("billing") === "yearly" ? "$90/yr" : "$9/mo"}
             </p>
             {watch("billing") === "yearly" && (
-              <span className="md:mt-2 text-left text-sm text-brand-marine-blue">
+              <span className="text-left text-sm text-brand-marine-blue md:mt-2">
                 2 months free
               </span>
             )}
@@ -69,7 +67,7 @@ export default function Step2() {
 
         <button
           type="button"
-          className={`flex group rounded-lg md:rounded-xl p-3 md:p-5 ring-1 hover:ring-brand-purplish-blue focus:outline-none focus:outline-brand-purplish-blue md:h-52 md:flex-col items-center md:items-baseline md:justify-between ${
+          className={`group flex items-center rounded-lg p-3 ring-1 hover:ring-brand-purplish-blue focus:outline-none focus:outline-brand-purplish-blue md:h-52 md:flex-col md:items-baseline md:justify-between md:rounded-xl md:p-5 ${
             errors.plan
               ? "ring-1 ring-brand-strawberry-red"
               : watch("plan") === "advanced"
@@ -81,17 +79,15 @@ export default function Step2() {
           <img
             src="/img/icon-advanced.svg"
             alt="advanced-icon"
-            className={`${watch('billing') === 'yearly' && "place-self-start"} h-10 md:h-14 md:place-self-start`}
+            className={`${watch("billing") === "yearly" && "place-self-start"} h-10 md:h-14 md:place-self-start`}
           />
           <div className="ml-5 flex flex-col group-hover:overflow-visible md:m-0">
-            <h3 className="text-left">
-              Advanced
-            </h3>
-            <p className="text-left text-nowrap text-sm md:text-base">
+            <h3 className="text-left">Advanced</h3>
+            <p className="text-nowrap text-left text-sm md:text-base">
               {getValues("billing") === "yearly" ? "$120/yr" : "$12/mo"}
             </p>
             {watch("billing") === "yearly" && (
-              <span className="md:mt-2 text-left text-sm text-brand-marine-blue">
+              <span className="text-left text-sm text-brand-marine-blue md:mt-2">
                 2 months free
               </span>
             )}
@@ -100,7 +96,7 @@ export default function Step2() {
 
         <button
           type="button"
-          className={`flex rounded-lg md:rounded-xl p-3 md:p-5 ring-1 hover:ring-brand-purplish-blue focus:outline-none focus:outline-brand-purplish-blue md:h-52 md:flex-col items-center md:items-baseline md:justify-between ${
+          className={`flex items-center rounded-lg p-3 ring-1 hover:ring-brand-purplish-blue focus:outline-none focus:outline-brand-purplish-blue md:h-52 md:flex-col md:items-baseline md:justify-between md:rounded-xl md:p-5 ${
             errors.plan
               ? "ring-1 ring-brand-strawberry-red"
               : watch("plan") === "pro"
@@ -112,17 +108,15 @@ export default function Step2() {
           <img
             src="/img/icon-pro.svg"
             alt="pro-icon"
-            className={`${watch('billing') === 'yearly' && "place-self-start"} h-10 md:h-14 md:place-self-start`}
+            className={`${watch("billing") === "yearly" && "place-self-start"} h-10 md:h-14 md:place-self-start`}
           />
           <div className="ml-5 flex flex-col md:m-0">
-            <h3 className="text-left">
-              Pro
-            </h3>
-            <p className="text-left text-nowrap text-sm md:text-base">
+            <h3 className="text-left">Pro</h3>
+            <p className="text-nowrap text-left text-sm md:text-base">
               {getValues("billing") === "yearly" ? "$150/yr" : "$15/mo"}
             </p>
             {watch("billing") === "yearly" && (
-              <span className="md:mt-2 text-left text-sm text-brand-marine-blue">
+              <span className="text-left text-sm text-brand-marine-blue md:mt-2">
                 2 months free
               </span>
             )}
@@ -138,7 +132,7 @@ export default function Step2() {
         )}
       </div>
 
-      <div className="my-3 md:my-10 flex h-12 w-full items-center justify-center bg-brand-magnolia">
+      <div className="my-3 flex h-12 w-full items-center justify-center bg-brand-magnolia md:my-10">
         <Controller
           control={control}
           name="billing"

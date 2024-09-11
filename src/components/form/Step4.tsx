@@ -23,10 +23,14 @@ export default function Step4({ handleNav }: Step4Props) {
               {getValues("plan")} ({getValues("billing")})
             </h6>
             <button className="w-min" onClick={() => handleNav(2)}>
-              <p className="text-xs md:text-sm underline hover:no-underline">Change</p>
+              <p className="text-xs underline hover:no-underline md:text-sm">
+                Change
+              </p>
             </button>
           </div>
-          <span className="font-bold text-nowrap text-brand-marine-blue">$9/mo</span>{" "}
+          <span className="text-nowrap font-bold text-brand-marine-blue">
+            $9/mo
+          </span>{" "}
           {/** TODO: make dynamic */}
         </div>
         {addons.every((addon) => !getValues(`addons.${addon.name}`)) ? (
@@ -37,7 +41,7 @@ export default function Step4({ handleNav }: Step4Props) {
               getValues(`addons.${addon.name}`) && (
                 <div className="mt-4 flex justify-between" key={addon.name}>
                   <p className="text-xs md:text-sm">{addon.title}</p>
-                  <span className="text-xs text-nowrap md:text-sm text-brand-marine-blue">
+                  <span className="text-nowrap text-xs text-brand-marine-blue md:text-sm">
                     {getValues("billing") === "yearly"
                       ? addon.yearlyPrice
                       : addon.monthlyPrice}
@@ -52,7 +56,7 @@ export default function Step4({ handleNav }: Step4Props) {
         <p>
           Total (per {getValues("billing") === "yearly" ? "year" : "month"}){" "}
         </p>
-        <span className="text-lg md:text-xl font-bold text-brand-purplish-blue">
+        <span className="text-lg font-bold text-brand-purplish-blue md:text-xl">
           +12/mo
         </span>{" "}
         {/** TODO: make dynamic */}

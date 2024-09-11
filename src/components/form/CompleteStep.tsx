@@ -4,7 +4,7 @@ export default function CompleteStep() {
       <img
         src="/img/icon-thank-you.svg"
         alt="thank-you-icon"
-        className="w-14 md:w-20 m-5"
+        className="m-5 w-14 md:w-20"
       />
 
       <h1>Thank you!</h1>
