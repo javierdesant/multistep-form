@@ -1,38 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import FormValues, { Addon } from "../../types/form.types";
-import { formatCurrency } from "../../helpers";
 
-const createAddon = (
-  name: keyof FormValues["addons"],
-  title: string,
-  description: string,
-  price: number,
-): Addon => ({
-  name,
-  title,
-  description,
-  price,
-  monthlyPrice: `+${formatCurrency(price)}/mo`,
-  yearlyPrice: `+${formatCurrency(price * 10)}/yr`,
-});
+type Step3Props = {
+  addons: Addon[];
+};
 
-export const addons: Addon[] = [
-  createAddon(
-    "onlineService",
-    "Online service",
-    "Access to multiplayer games",
-    1,
-  ),
-  createAddon("largerStorage", "Larger storage", "Extra 1TB of cloud save", 2),
-  createAddon(
-    "customizableProfile",
-    "Customizable profile",
-    "Custom theme on your profile",
-    2,
-  ),
-];
-
-export default function Step3() {
+export default function Step3({ addons }: Step3Props) {
   const { register, getValues } = useFormContext<FormValues>();
 
   return (

@@ -3,11 +3,12 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formDataSchema } from "../../lib/schema.ts";
 import CompleteStep from "./CompleteStep.tsx";
-import FormValues, { Steps } from "../../types/form.types.ts";
+import FormValues, { Addon, Plan, Steps } from "../../types/form.types.ts";
 import Step1 from "./Step1.tsx";
 import Step2 from "./Step2.tsx";
 import Step3 from "./Step3.tsx";
 import Step4 from "./Step4.tsx";
+import { formatCurrency } from "../../helpers/index.ts";
 
 const steps: Steps = [
   { id: "complete", name: "Complete", fields: [] },
@@ -15,6 +16,50 @@ const steps: Steps = [
   { id: "step-2", name: "Select plan", fields: ["plan"] },
   { id: "step-3", name: "Add-ons", fields: ["billing"] },
   { id: "step-4", name: "Summary", fields: ["addons"] },
+];
+
+const createPlan = (name: FormValues["plan"], price: number): Plan => ({
+  name,
+  icon: `icon-${name}.svg`,
+  price,
+  monthlyPrice: `+${formatCurrency(price)}/mo`,
+  yearlyPrice: `+${formatCurrency(price * 10)}/yr`,
+});
+
+const plans: Plan[] = [
+  createPlan("arcade", 9),
+  createPlan("advanced", 12),
+  createPlan("pro", 15),
+];
+
+const createAddon = (
+  name: keyof FormValues["addons"],
+  title: string,
+  description: string,
+  price: number,
+): Addon => ({
+  name,
+  title,
+  description,
+  price,
+  monthlyPrice: `+${formatCurrency(price)}/mo`,
+  yearlyPrice: `+${formatCurrency(price * 10)}/yr`,
+});
+
+const addons: Addon[] = [
+  createAddon(
+    "onlineService",
+    "Online service",
+    "Access to multiplayer games",
+    1,
+  ),
+  createAddon("largerStorage", "Larger storage", "Extra 1TB of cloud save", 2),
+  createAddon(
+    "customizableProfile",
+    "Customizable profile",
+    "Custom theme on your profile",
+    2,
+  ),
 ];
 
 const LAST_STEP = steps.length - 1;
@@ -137,9 +182,11 @@ export default function Form() {
             noValidate
           >
             {currentStep === 1 && <Step1 />}
-            {currentStep === 2 && <Step2 />}
-            {currentStep === 3 && <Step3 />}
-            {currentStep === 4 && <Step4 handleNav={handleNav} />}
+            {currentStep === 2 && <Step2 plans={plans} />}
+            {currentStep === 3 && <Step3 addons={addons} />}
+            {currentStep === 4 && (
+              <Step4 plans={plans} addons={addons} handleNav={handleNav} />
+            )}
 
             {currentStep === COMPLETE_STEP && <CompleteStep />}
 

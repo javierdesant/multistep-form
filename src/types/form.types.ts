@@ -22,7 +22,7 @@ type Addon = {
 
 type Plan = {
   name: FormValues["plan"];
-  icon: `icon-${FormValues["plan"]}.svg`
+  icon: `icon-${FormValues["plan"]}.svg`;
   price: number;
   monthlyPrice: `+${string}/mo`;
   yearlyPrice: `+${string}/yr`;

@@ -1,13 +1,34 @@
+import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
-import FormValues from "../../types/form.types";
-import { addons } from "./Step3";
+import FormValues, { Plan, Addon } from "../../types/form.types";
+import { formatCurrency } from "../../helpers";
 
 type Step4Props = {
+  plans: Plan[];
+  addons: Addon[];
   handleNav: (index: number) => Promise<void>;
 };
 
-export default function Step4({ handleNav }: Step4Props) {
+export default function Step4({ plans, addons, handleNav }: Step4Props) {
   const { getValues } = useFormContext<FormValues>();
+
+  const selectedPlan = useMemo(
+    () => plans.find((plan) => plan.name === getValues("plan")),
+    [getValues("plan")],
+  );
+  const selectedAddons = useMemo(
+    () => addons.filter((addon) => getValues(`addons.${addon.name}`)),
+    [getValues("addons")],
+  );
+
+  const totalPrice = useMemo(() => {
+    const planPrice = selectedPlan ? selectedPlan.price : 0;
+    const addonsPrice = selectedAddons.reduce(
+      (acc, addon) => acc + addon.price,
+      0,
+    );
+    return planPrice + addonsPrice;
+  }, [selectedPlan, selectedAddons]);
 
   return (
     <div>
@@ -29,9 +50,10 @@ export default function Step4({ handleNav }: Step4Props) {
             </button>
           </div>
           <span className="text-nowrap font-bold text-brand-marine-blue">
-            $9/mo
-          </span>{" "}
-          {/** TODO: make dynamic */}
+            {getValues("billing") === "yearly"
+              ? selectedPlan?.yearlyPrice
+              : selectedPlan?.monthlyPrice}
+          </span>
         </div>
         {addons.every((addon) => !getValues(`addons.${addon.name}`)) ? (
           <p className="mt-4 text-xs md:text-sm">No addons selected</p>
@@ -54,12 +76,15 @@ export default function Step4({ handleNav }: Step4Props) {
 
       <div className="flex items-center justify-between p-3 pt-5 md:p-8">
         <p>
-          Total (per {getValues("billing") === "yearly" ? "year" : "month"}){" "}
+          Total (per {getValues("billing") === "yearly" ? "year" : "month"})
         </p>
         <span className="text-lg font-bold text-brand-purplish-blue md:text-xl">
-          +12/mo
-        </span>{" "}
-        {/** TODO: make dynamic */}
+          +
+          {getValues("billing") === "yearly"
+            ? formatCurrency(totalPrice * 10)
+            : formatCurrency(totalPrice)}
+          /{getValues("billing") === "yearly" ? "yr" : "mo"}
+        </span>
       </div>
     </div>
   );
