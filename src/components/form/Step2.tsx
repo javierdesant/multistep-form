@@ -1,6 +1,24 @@
 import { Controller, useFormContext } from "react-hook-form";
 import ToggleSwitch from "../ToggleSwitch";
-import FormValues from "../../types/form.types";
+import FormValues, { Plan } from "../../types/form.types";
+import { formatCurrency } from "../../helpers";
+
+const createPlan = (
+  name: FormValues["plan"],
+  price: number
+): Plan => ({
+  name,
+  icon: `icon-${name}.svg`,
+  price,
+  monthlyPrice: `+${formatCurrency(price)}/mo`,
+  yearlyPrice: `+${formatCurrency(price * 10)}/yr`,
+});
+
+const plans: Plan[] = [
+  createPlan("arcade", 9),
+  createPlan("advanced", 12),
+  createPlan("pro", 15),
+]
 
 export default function Step2() {
   const {
@@ -26,24 +44,26 @@ export default function Step2() {
       </p>
 
       <div className="grid grid-cols-1 grid-rows-3 gap-5 md:grid-cols-3 md:grid-rows-1">
-        <button
+        {plans.map((plan) => (
+          <button
           type="button"
+          key={plan.name}
           className={`flex items-center rounded-lg p-3 ring-1 hover:ring-brand-purplish-blue focus:outline-none focus:outline-brand-purplish-blue md:h-52 md:flex-col md:items-baseline md:justify-between md:rounded-xl md:p-5 ${
-            watch("plan") === "arcade"
+            watch("plan") === plan.name
               ? "bg-brand-magnolia ring-brand-purplish-blue"
               : "ring-brand-light-gray"
           }`}
-          onClick={() => handleTogglePlan("arcade")}
+          onClick={() => handleTogglePlan(plan.name)}
         >
           <img
-            src="/img/icon-arcade.svg"
-            alt="arcade-icon"
+            src={`/img/${plan.icon}`}
+            alt={`${plan.name} icon`}
             className={`${watch("billing") === "yearly" && "place-self-start"} h-10 md:h-14 md:place-self-start`}
           />
           <div className="ml-5 flex flex-col md:m-0">
-            <h3 className="text-left">Arcade</h3>
+            <h3 className="text-left capitalize">{plan.name}</h3>
             <p className="text-nowrap text-left text-sm md:text-base">
-              {getValues("billing") === "yearly" ? "$90/yr" : "$9/mo"}
+              {getValues("billing") === "yearly" ? plan.yearlyPrice : plan.monthlyPrice}
             </p>
             {watch("billing") === "yearly" && (
               <span className="text-left text-sm text-brand-marine-blue md:mt-2">
@@ -52,60 +72,7 @@ export default function Step2() {
             )}
           </div>
         </button>
-
-        <button
-          type="button"
-          className={`group flex items-center rounded-lg p-3 ring-1 hover:ring-brand-purplish-blue focus:outline-none focus:outline-brand-purplish-blue md:h-52 md:flex-col md:items-baseline md:justify-between md:rounded-xl md:p-5 ${
-            watch("plan") === "advanced"
-              ? "bg-brand-magnolia ring-brand-purplish-blue"
-              : "ring-brand-light-gray"
-          }`}
-          onClick={() => handleTogglePlan("advanced")}
-        >
-          <img
-            src="/img/icon-advanced.svg"
-            alt="advanced-icon"
-            className={`${watch("billing") === "yearly" && "place-self-start"} h-10 md:h-14 md:place-self-start`}
-          />
-          <div className="ml-5 flex flex-col group-hover:overflow-visible md:m-0">
-            <h3 className="text-left">Advanced</h3>
-            <p className="text-nowrap text-left text-sm md:text-base">
-              {getValues("billing") === "yearly" ? "$120/yr" : "$12/mo"}
-            </p>
-            {watch("billing") === "yearly" && (
-              <span className="text-left text-sm text-brand-marine-blue md:mt-2">
-                2 months free
-              </span>
-            )}
-          </div>
-        </button>
-
-        <button
-          type="button"
-          className={`flex items-center rounded-lg p-3 ring-1 hover:ring-brand-purplish-blue focus:outline-none focus:outline-brand-purplish-blue md:h-52 md:flex-col md:items-baseline md:justify-between md:rounded-xl md:p-5 ${
-            watch("plan") === "pro"
-              ? "bg-brand-magnolia ring-brand-purplish-blue"
-              : "ring-brand-light-gray"
-          }`}
-          onClick={() => handleTogglePlan("pro")}
-        >
-          <img
-            src="/img/icon-pro.svg"
-            alt="pro-icon"
-            className={`${watch("billing") === "yearly" && "place-self-start"} h-10 md:h-14 md:place-self-start`}
-          />
-          <div className="ml-5 flex flex-col md:m-0">
-            <h3 className="text-left">Pro</h3>
-            <p className="text-nowrap text-left text-sm md:text-base">
-              {getValues("billing") === "yearly" ? "$150/yr" : "$15/mo"}
-            </p>
-            {watch("billing") === "yearly" && (
-              <span className="text-left text-sm text-brand-marine-blue md:mt-2">
-                2 months free
-              </span>
-            )}
-          </div>
-        </button>
+        ))}
       </div>
 
       <div className="my-3 flex h-12 w-full items-center justify-center bg-brand-magnolia md:my-10">
