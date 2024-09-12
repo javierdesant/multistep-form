@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        "ubuntu": ["Ubuntu", "sans-serif"],
+        ubuntu: ["Ubuntu", "sans-serif"],
       },
       colors: {
         // Primary
@@ -27,8 +27,5 @@ export default {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
-}
-
+  plugins: [require("@tailwindcss/forms")],
+};
