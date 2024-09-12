@@ -28,6 +28,10 @@ type Plan = {
   yearlyPrice: `+${string}/yr`;
 };
 
-export { type Steps, type Addon, type Plan };
+type Plans = [Plan, Plan, Plan]
+
+type Addons = Addon[]
+
+export { type Steps, type Addon, type Addons, type Plan, type Plans };
 
 export default FormValues;

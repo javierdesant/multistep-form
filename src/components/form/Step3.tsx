@@ -15,7 +15,7 @@ export default function Step3({ addons }: Step3Props) {
         Add-ons help enhance your gaming experience.
       </p>
 
-      <div className="mb-4 grid grid-cols-1 grid-rows-3 gap-3 md:gap-5">
+      <div className="mb-4 grid grid-cols-1 gap-3 md:gap-5">
         {addons.map((addon) => (
           <label
             htmlFor={`addons.${addon.name}`}

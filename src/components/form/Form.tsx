@@ -3,12 +3,12 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formDataSchema } from "../../lib/schema.ts";
 import CompleteStep from "./CompleteStep.tsx";
-import FormValues, { Addon, Plan, Steps } from "../../types/form.types.ts";
+import FormValues, { Addon, Addons, Plan, Plans, Steps } from "../../types/form.types.ts";
+import { formatCurrency } from "../../helpers/index.ts";
 import Step1 from "./Step1.tsx";
 import Step2 from "./Step2.tsx";
 import Step3 from "./Step3.tsx";
 import Step4 from "./Step4.tsx";
-import { formatCurrency } from "../../helpers/index.ts";
 
 const steps: Steps = [
   { id: "complete", name: "Complete", fields: [] },
@@ -26,7 +26,7 @@ const createPlan = (name: FormValues["plan"], price: number): Plan => ({
   yearlyPrice: `+${formatCurrency(price * 10)}/yr`,
 });
 
-const plans: Plan[] = [
+const plans: Plans = [
   createPlan("arcade", 9),
   createPlan("advanced", 12),
   createPlan("pro", 15),
@@ -46,7 +46,7 @@ const createAddon = (
   yearlyPrice: `+${formatCurrency(price * 10)}/yr`,
 });
 
-const addons: Addon[] = [
+const addons: Addons = [
   createAddon(
     "onlineService",
     "Online service",
@@ -144,7 +144,7 @@ export default function Form() {
         )}
       </div>
 
-      <div className="z-10 flex w-full max-w-[350px] rounded-xl bg-white p-4 shadow-xl md:h-full md:max-h-[600px] md:max-w-[1050px] md:rounded-2xl">
+      <div className="z-10 flex w-full max-w-[350px] rounded-xl bg-white p-4 shadow-xl md:h-min md:min-h-[600px] md:max-w-[1050px] md:rounded-2xl">
         <div className="hidden min-w-[274px] flex-col rounded-xl bg-sidebar-desktop bg-cover bg-bottom bg-no-repeat p-5 pt-7 md:visible md:flex">
           {steps.map(
             (step, index) =>
