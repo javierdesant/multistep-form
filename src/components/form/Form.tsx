@@ -3,7 +3,13 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formDataSchema } from "../../lib/schema.ts";
 import CompleteStep from "./CompleteStep.tsx";
-import FormValues, { Addon, Addons, Plan, Plans, Steps } from "../../types/form.types.ts";
+import FormValues, {
+  Addon,
+  Addons,
+  Plan,
+  Plans,
+  Steps,
+} from "../../types/form.types.ts";
 import { formatCurrency } from "../../helpers/index.ts";
 import Step1 from "./Step1.tsx";
 import Step2 from "./Step2.tsx";

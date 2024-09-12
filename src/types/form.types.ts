@@ -28,9 +28,9 @@ type Plan = {
   yearlyPrice: `+${string}/yr`;
 };
 
-type Plans = [Plan, Plan, Plan]
+type Plans = [Plan, Plan, Plan];
 
-type Addons = Addon[]
+type Addons = Addon[];
 
 export { type Steps, type Addon, type Addons, type Plan, type Plans };
 
