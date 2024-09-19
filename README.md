@@ -68,9 +68,9 @@ In this project, I learned the following:
 
 #### Tailwind CSS
 
-- Designing responsive layouts with Tailwind CSS
+- **Designing responsive layouts with Tailwind CSS**
 - Utilizing utility-first classes for styling
-- **Managing component spacing and alignment with Tailwind**
+- Managing component spacing and alignment with Tailwind
 - Creating custom themes and extending Tailwind configurations
 - **Applying conditional styling based on state with Tailwind**
 
